@@ -77,8 +77,8 @@ modtime = 1516137582.375795000
 access = read : [ * ], write : [ admin, power ]
 export = none
 owner = keiran.harris
-version = 6.4.0
-modtime = 1516487546.072577000
+version = 7.1.2
+modtime = 1532762790.007818000
 
 [views/_kview-search]
 access = read : [ * ], write : [ admin, power ]
