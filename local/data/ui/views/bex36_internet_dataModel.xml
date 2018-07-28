@@ -11,8 +11,114 @@
   </fieldset>
   <row>
     <panel>
+      <single>
+        <title>TOTAL TRAFFIC</title>
+        <search>
+          <query>| tstats min("bex36snmp_ta.bytesIn") max("bex36snmp_ta.bytesIn") min("bex36snmp_ta.bytesOut") max("bex36snmp_ta.bytesOut") from datamodel=k_snmp_ta  where (nodename = bex36snmp_ta) groupby _time prestats=true
+| stats min("bex36snmp_ta.bytesIn") as bytesDownStart, max("bex36snmp_ta.bytesIn") as bytesDownEnd, min("bex36snmp_ta.bytesOut") as bytesUpStart, max("bex36snmp_ta.bytesOut") as bytesUpEnd
+| eval bytesDownDiff = bytesDownEnd - bytesDownStart
+| eval bytesUpDiff = bytesUpEnd - bytesUpStart
+| eval bytesTotal = bytesDownDiff + bytesUpDiff
+| eval bytesTotalGB = round( ((bytesTotal)/1024/1024/1024), 10)
+| table bytesTotalGB</query>
+          <earliest>$K_TimePicker.earliest$</earliest>
+          <latest>$K_TimePicker.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[50,100,150,200]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="underLabel">250 GB Monthly Quota (midnight 25th rollover)</option>
+        <option name="unit">GB</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Made up of: DOWNLOADS</title>
+        <search>
+          <query>| tstats min("bex36snmp_ta.bytesIn") max("bex36snmp_ta.bytesIn") from datamodel=k_snmp_ta  where (nodename = bex36snmp_ta) groupby _time prestats=true
+| stats min("bex36snmp_ta.bytesIn") as bytesStart, max("bex36snmp_ta.bytesIn") as bytesEnd
+| eval bytesDiff = bytesEnd - bytesStart
+| eval bytesDiffGB = round( ((bytesDiff)/1024/1024/1024), 1)
+| table bytesDiffGB</query>
+          <earliest>$K_TimePicker.earliest$</earliest>
+          <latest>$K_TimePicker.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[50,100,150,200]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="underLabel">Traffic Received (midnight 25th rollover)</option>
+        <option name="unit">GB</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Made up of: UPLOADS</title>
+        <search>
+          <query>| tstats min("bex36snmp_ta.bytesOut") max("bex36snmp_ta.bytesOut") from datamodel=k_snmp_ta  where (nodename = bex36snmp_ta) groupby _time prestats=true
+| stats min("bex36snmp_ta.bytesOut") as bytesStart, max("bex36snmp_ta.bytesOut") as bytesEnd
+| eval bytesDiff = bytesEnd - bytesStart
+| eval bytesDiffGB = round( ((bytesDiff)/1024/1024/1024), 10)
+| table bytesDiffGB</query>
+          <earliest>$K_TimePicker.earliest$</earliest>
+          <latest>$K_TimePicker.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.0000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[5,10,15,20]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="underLabel">Traffic Transmitted (midnight 25th rollover)</option>
+        <option name="unit">GB</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
       <chart>
-        <title>GB Per Day</title>
+        <title>GB Daily Breakdown</title>
         <search>
           <query>| tstats max("bex36snmp_ta.bytesIn") max("bex36snmp_ta.bytesOut") from datamodel=k_snmp_ta  where (nodename = bex36snmp_ta) groupby _time  prestats=true  
 | timechart span=1d max("bex36snmp_ta.bytesIn") as downBytesEoD, max("bex36snmp_ta.bytesOut") as upBytesEoD,  
