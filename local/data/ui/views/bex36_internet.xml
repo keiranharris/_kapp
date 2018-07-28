@@ -1,0 +1,205 @@
+<form>
+  <label>[Bex36:: Internet - slowProblem]</label>
+  <fieldset submitButton="false">
+    <input type="time" token="formToken_PERIOD" searchWhenChanged="true">
+      <label>Select Period</label>
+      <default>
+        <earliest>-mon@mon+25d</earliest>
+        <latest></latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <single>
+        <title>TOTAL TRAFFIC</title>
+        <search>
+          <query>index=main sourcetype=snmp_ta | stats earliest(bytesOut) as bytesUpStart latest(bytesOut) as bytesUpEnd earliest(bytesIn) as bytesDownStart latest(bytesIn) as bytesDownEnd | eval bytesUpToDate = (bytesUpEnd - bytesUpStart)/1024/1024/1024 | eval bytesDownToDate = (bytesDownEnd - bytesDownStart)/1024/1024/1024 | eval bytesTotal = bytesUpToDate + bytesDownToDate | eval bytesTotal = round(bytesTotal,1) | table bytesTotal</query>
+          <earliest>$formToken_PERIOD.earliest$</earliest>
+          <latest>$formToken_PERIOD.latest$</latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">block</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.0</option>
+        <option name="rangeColors">["0x65a637","0xf58f39","0xd93f3c"]</option>
+        <option name="rangeValues">[100,200]</option>
+        <option name="showSparkline">true</option>
+        <option name="showTrendIndicator">true</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unit">GB</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">true</option>
+        <option name="linkView">search</option>
+        <option name="underLabel">250GB Quota (25th rollover)</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Made up of: DOWNLOADS</title>
+        <search>
+          <query>index=main sourcetype=snmp_ta | stats earliest(bytesIn) as bytesStart latest(bytesIn) as bytesEnd | eval bytesToDate = (bytesEnd - bytesStart)/1024/1024/1024 | eval bytesToDate = round(bytesToDate,1) | table bytesToDate</query>
+          <earliest>$formToken_PERIOD.earliest$</earliest>
+          <latest>$formToken_PERIOD.latest$</latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">block</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.0</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <option name="rangeColors">["0x65a637","0x6db7c6"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="linkView">search</option>
+        <option name="unit">GB</option>
+        <option name="underLabel">Uploads (25th rollover)</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Made up of: UPLOADS</title>
+        <search>
+          <query>index=main sourcetype=snmp_ta | stats earliest(bytesOut) as bytesStart latest(bytesOut) as bytesEnd | eval bytesToDate = (bytesEnd - bytesStart)/1024/1024/1024 | eval bytesToDate = round(bytesToDate,1) | table bytesToDate</query>
+          <earliest>$formToken_PERIOD.earliest$</earliest>
+          <latest>$formToken_PERIOD.latest$</latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">block</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.0</option>
+        <option name="rangeColors">["0x65a637","0x6db7c6","0xf7bc38","0xf58f39","0xd93f3c"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="showSparkline">true</option>
+        <option name="showTrendIndicator">true</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unit">GB</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">true</option>
+        <option name="useThousandSeparators">true</option>
+        <option name="linkView">search</option>
+        <option name="underLabel">Uploads (25th rollover)</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>GB Daily Breakdown</title>
+        <search>
+          <query>sourcetype="snmp_ta" 
+| streamstats window=2 global=f earliest(bytesIn) as bytesInStart, latest(bytesIn) as bytesInEnd, earliest(bytesOut) as bytesOutStart, latest(bytesOut) as bytesOutEnd
+| eval bytesInPerSlice=(bytesInEnd-bytesInStart)/1024/1024/1024
+| eval bytesOutPerSlice=-(bytesOutEnd-bytesOutStart)/1024/1024/1024
+| timechart span=1d sum(bytesInPerSlice) as GB/day-DOWN sum(bytesOutPerSlice) as GB/day-UP</query>
+          <earliest>$formToken_PERIOD.earliest$</earliest>
+          <latest>$formToken_PERIOD.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>bex36-r01 ADSL interface bandwidth</title>
+        <search>
+          <query>sourcetype="snmp_ta" | eval mbpmIN=(bytesIn)*8/1024/1024 | eval mbpmOUT=-(bytesOut)*8/1024/1024 | eval mbpmIN=round(mbpmIN,2) | eval mbpmOUT=round(mbpmOUT,2)  | streamstats current=t global=f window=2 earliest(mbpmIN) as current_in latest(mbpmIN) as next_in earliest(mbpmOUT) as current_out latest(mbpmOUT) as next_out by host | eval mbpsUP=(next_out-current_out)/60/30 | eval mbpsDOWN=(next_in-current_in)/60/30 | timechart span=30m sum(mbpsDOWN) as mbpsDOWN sum(mbpsUP) as mbpsUP</query>
+          <earliest>$formToken_PERIOD.earliest$</earliest>
+          <latest>$formToken_PERIOD.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">MBPS</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisEnd</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.data.count">9999</option>
+        <option name="charting.axisY.maximumNumber">15</option>
+        <option name="charting.axisY.minimumNumber">-3</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>ADSL dropped packet (day sum)</title>
+        <search>
+          <query>sourcetype="snmp_ta" | timechart span=1d sum(adslErrorsUncorrectedDropped) as Err-drop</query>
+          <earliest>$formToken_PERIOD.earliest$</earliest>
+          <latest>$formToken_PERIOD.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+</form>

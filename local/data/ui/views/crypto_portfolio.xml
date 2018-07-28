@@ -1,0 +1,119 @@
+<form>
+  <label>[Crypto:: Portfolio]</label>
+  <fieldset submitButton="false">
+    <input type="time" token="formToken_TimePicker" searchWhenChanged="true">
+      <label>Time Period</label>
+      <default>
+        <earliest>-30d@d</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <chart>
+        <title>Portfolio (Profit vs Cash Invested)</title>
+        <search>
+          <query>sourcetype=_json kCryptoDictType="portfolio" | timechart last(KM-PORTFOLIO-SUM.totalALL) as total, last(KM-PORTFOLIO-SUM.totalCashIn) as cashIn, last(KM-PORTFOLIO-SUM.totalProfit) as profit</query>
+          <earliest>$formToken_TimePicker.earliest$</earliest>
+          <latest>$formToken_TimePicker.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Portfolio (Main)</title>
+        <search>
+          <query>sourcetype=_json kCryptoDictType="portfolio" | timechart last(KM-PORTFOLIO.AUDbtcmAUD) as AUDbtcmAUD, last(KM-PORTFOLIO.BCHbtcmAUD) as BCHbtcmAUD, last(KM-PORTFOLIO.BTCbtcmAUD) as BTCbtcmAUD, last(KM-PORTFOLIO.ETCbtcmAUD) as ETCbtcmAUD, last(KM-PORTFOLIO.ETHbtcmAUD) as ETHbtcmAUD, last(KM-PORTFOLIO.LTCbtcmAUD) as LTCbtcmAUD, last(KM-PORTFOLIO.XRPbtcmAUD) as XRPbtcmAUD, last(KM-PORTFOLIO-SUM.totalBINmain) as totalBINmain,   last(KM-PORTFOLIO-SUM.totalBINalt) as totalBINalt, last(KM-PORTFOLIO-SUM.totalALL) as totalALL,</query>
+          <earliest>$formToken_TimePicker.earliest$</earliest>
+          <latest>$formToken_TimePicker.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Portfolio (All)</title>
+        <search>
+          <query>sourcetype=_json kCryptoDictType="portfolio" | timechart last(KM-PORTFOLIO.AUDbtcmAUD) as AUDbtcmAUD, last(KM-PORTFOLIO.BCHbtcmAUD) as BCHbtcmAUD, last(KM-PORTFOLIO.BTCbtcmAUD) as BTCbtcmAUD, last(KM-PORTFOLIO.ETCbtcmAUD) as ETCbtcmAUD, last(KM-PORTFOLIO.ETHbtcmAUD) as ETHbtcmAUD, last(KM-PORTFOLIO.LTCbtcmAUD) as LTCbtcmAUD, last(KM-PORTFOLIO.XRPbtcmAUD) as XRPbtcmAUD, last(KM-PORTFOLIO.BCHbinAUD) as BCHbinAUD, last(KM-PORTFOLIO.BTCbinAUD) as BTCbinAUD, last(KM-PORTFOLIO.ETCbinAUD) as ETCbinAUD,  last(KM-PORTFOLIO.ETHbinAUD) as ETHbinAUD, last(KM-PORTFOLIO.LTCbinAUD) as LTCbinAUD, last(KM-PORTFOLIO.XRPbinAUD) as XRPbinAUD,  last(KM-PORTFOLIO-SUM.totalBINalt) as totalBINalt, last(KM-PORTFOLIO-SUM.totalCashIn) as totalCashIn, last(KM-PORTFOLIO-SUM.totalProfit) as totalProfit, last(KM-PORTFOLIO-SUM.totalALL) as totalALL,</query>
+          <earliest>$formToken_TimePicker.earliest$</earliest>
+          <latest>$formToken_TimePicker.latest$</latest>
+        </search>
+        <option name="refresh.auto.interval">300</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">$ Per Annum</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+</form>

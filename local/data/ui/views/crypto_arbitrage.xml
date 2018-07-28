@@ -1,0 +1,226 @@
+<form>
+  <label>[Crypto:: Arbitrage]</label>
+  <fieldset submitButton="false">
+    <input type="time" token="formToken_TimePicker" searchWhenChanged="true">
+      <label>Time Period</label>
+      <default>
+        <earliest>-30d@d</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>[last 24hr fixed] (span=5m)</title>
+      <chart>
+        <title>BTCM-to-KRACKEN Deltas (against EUR)</title>
+        <search>
+          <query>sourcetype=_json exchArbDeltas | timechart span=5m avg(BTC.delta) as BTCdelta, avg(ETH.delta) as ETHdelta, avg(LTC.delta) as LTCdelta, avg(ETC.delta) as ETCdelta, avg(BCH.delta) as BCHdelta, avg(XRP.delta) as XRPdelta,</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>[last 24hr fixed] (span=5m)</title>
+      <chart>
+        <title>BTCM-to-BINANCE Deltas (against BTC)</title>
+        <search>
+          <query>sourcetype=_json exchDelta | timechart span=5m avg(EXCHDELTA-BTCM-BINANCE.ETH) as ETHdelta, avg(EXCHDELTA-BTCM-BINANCE.LTC) as LTCdelta, avg(EXCHDELTA-BTCM-BINANCE.ETC) as ETCdelta, avg(EXCHDELTA-BTCM-BINANCE.XRP) as XRPdelta, avg(EXCHDELTA-BTCM-BINANCE.slackThresh) as slackAlertThresh</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="refresh.auto.interval">300</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.axisTitleY.text">Delta %</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>[TimePicker] (avg)</title>
+      <chart>
+        <title>BTCM-to-KRACKEN Deltas (against EUR)</title>
+        <search>
+          <query>sourcetype=_json exchArbDeltas | timechart  avg(BTC.delta) as BTCdelta, avg(ETH.delta) as ETHdelta, avg(LTC.delta) as LTCdelta, avg(ETC.delta) as ETCdelta, avg(BCH.delta) as BCHdelta, avg(XRP.delta) as XRPdelta,</query>
+          <earliest>$formToken_TimePicker.earliest$</earliest>
+          <latest>$formToken_TimePicker.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>[TimePicker] (avg)</title>
+      <chart>
+        <title>BTCM-to-BINANCE Deltas (against BTC)</title>
+        <search>
+          <query>sourcetype=_json exchDelta | timechart  avg(EXCHDELTA-BTCM-BINANCE.ETH) as ETHdelta, avg(EXCHDELTA-BTCM-BINANCE.LTC) as LTCdelta, avg(EXCHDELTA-BTCM-BINANCE.ETC) as ETCdelta, avg(EXCHDELTA-BTCM-BINANCE.XRP) as XRPdelta, avg(EXCHDELTA-BTCM-BINANCE.slackThresh) as slackAlertThresh</query>
+          <earliest>$formToken_TimePicker.earliest$</earliest>
+          <latest>$formToken_TimePicker.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.axisTitleY.text">Delta %</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>[TimePicker] (90th percentile - order all the days values, pick the one sitting at 90%)</title>
+      <chart>
+        <title>BTCM-to-KRACKEN Deltas (against EUR)</title>
+        <search>
+          <query>sourcetype=_json exchArbDeltas | timechart  perc90(BTC.delta) as BTCdelta, perc90(ETH.delta) as ETHdelta, perc90(LTC.delta) as LTCdelta, perc90(ETC.delta) as ETCdelta, perc90(BCH.delta) as BCHdelta, perc90(XRP.delta) as XRPdelta,</query>
+          <earliest>$formToken_TimePicker.earliest$</earliest>
+          <latest>$formToken_TimePicker.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>[TimePicker] (90th percentile - order all the days values, pick the one sitting at 90%)</title>
+      <chart>
+        <title>BTCM-to-BINANCE Deltas (against BTC)</title>
+        <search>
+          <query>sourcetype=_json exchDelta | timechart  perc90(EXCHDELTA-BTCM-BINANCE.ETH) as ETHdelta, perc90(EXCHDELTA-BTCM-BINANCE.LTC) as LTCdelta, perc90(EXCHDELTA-BTCM-BINANCE.ETC) as ETCdelta, perc90(EXCHDELTA-BTCM-BINANCE.XRP) as XRPdelta, perc90(EXCHDELTA-BTCM-BINANCE.slackThresh) as slackAlertThresh</query>
+          <earliest>$formToken_TimePicker.earliest$</earliest>
+          <latest>$formToken_TimePicker.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.axisTitleY.text">Delta %</option>
+      </chart>
+    </panel>
+  </row>
+</form>

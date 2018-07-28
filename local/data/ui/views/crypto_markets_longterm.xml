@@ -1,0 +1,252 @@
+<form>
+  <label>[Crypto:: Markets] (long-term)</label>
+  <fieldset submitButton="false">
+    <input type="time" token="formToken_TimePicker" searchWhenChanged="true">
+      <label>Time Period</label>
+      <default>
+        <earliest>-30d@d</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <chart>
+        <title>BTC (bitcoin)</title>
+        <search>
+          <query>index=main source=*Crypto* sourcetype=_json | timechart perc99(BTC-DATA.bestBid) as buyOffer, perc99(BTC-DATA.bestAsk) as sellAsk, perc99(BTC-DATA.lastPrice) as lastSale, perc99(BTC-DATA.volume24h) as volume24h</query>
+          <earliest>$formToken_TimePicker.earliest$</earliest>
+          <latest>$formToken_TimePicker.latest$</latest>
+        </search>
+        <option name="charting.seriesColors">[0xbfe1ef,0xf4d89c,0xd45641,0x6a5d9c]</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">Volume (coins)</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.text">Coin Price ($AUD)</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">1</option>
+        <option name="charting.axisY2.scale">linear</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.axisLabelsY.majorUnit">2000</option>
+        <option name="charting.axisY.maximumNumber">auto</option>
+        <option name="charting.chart.overlayFields">buyOffer,sellAsk,lastSale</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>ETH (ethereum)</title>
+        <search>
+          <query>index=main source=*Crypto* sourcetype=_json | timechart perc99(ETH-DATA.bestBid) as buyOffer, perc99(ETH-DATA.bestAsk) as sellAsk, perc99(ETH-DATA.lastPrice) as lastSale, perc99(ETH-DATA.volume24h) as volume24h</query>
+          <earliest>$formToken_TimePicker.earliest$</earliest>
+          <latest>$formToken_TimePicker.latest$</latest>
+        </search>
+        <option name="charting.seriesColors">[0xbfe1ef,0xf4d89c,0xd45641,0x6a5d9c]</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">Volume (coins)</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.text">Coin Price ($AUD)</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">1</option>
+        <option name="charting.axisY2.scale">linear</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.axisLabelsY.majorUnit">12000</option>
+        <option name="charting.axisY.maximumNumber">auto</option>
+        <option name="charting.chart.overlayFields">buyOffer,sellAsk,lastSale</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>LTC (litecoin)</title>
+        <search>
+          <query>index=main source=*Crypto* sourcetype=_json | timechart perc99(LTC-DATA.bestBid) as buyOffer, perc99(LTC-DATA.bestAsk) as sellAsk, perc99(LTC-DATA.lastPrice) as lastSale, perc99(LTC-DATA.volume24h) as volume24h</query>
+          <earliest>$formToken_TimePicker.earliest$</earliest>
+          <latest>$formToken_TimePicker.latest$</latest>
+        </search>
+        <option name="charting.seriesColors">[0xbfe1ef,0xf4d89c,0xd45641,0x6a5d9c]</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">Volume (coins)</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.text">Coin Price ($AUD)</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">1</option>
+        <option name="charting.axisY2.scale">linear</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.axisLabelsY.majorUnit">30000</option>
+        <option name="charting.axisY.maximumNumber">auto</option>
+        <option name="charting.chart.overlayFields">buyOffer,sellAsk,lastSale</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>ETC (ethereum classic)</title>
+        <search>
+          <query>index=main source=*Crypto* sourcetype=_json | timechart perc99(ETC-DATA.bestBid) as buyOffer, perc99(ETC-DATA.bestAsk) as sellAsk, perc99(ETC-DATA.lastPrice) as lastSale, perc99(ETC-DATA.volume24h) as volume24h</query>
+          <earliest>$formToken_TimePicker.earliest$</earliest>
+          <latest>$formToken_TimePicker.latest$</latest>
+        </search>
+        <option name="charting.seriesColors">[0xbfe1ef,0xf4d89c,0xd45641,0x6a5d9c]</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">Volume (coins)</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.text">Coin Price ($AUD)</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">1</option>
+        <option name="charting.axisY2.scale">linear</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.axisLabelsY.majorUnit">35000</option>
+        <option name="charting.axisY.maximumNumber">auto</option>
+        <option name="charting.chart.overlayFields">buyOffer,sellAsk,lastSale</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>BCH (bitcoin cash)</title>
+        <search>
+          <query>index=main source=*Crypto* sourcetype=_json | timechart perc99(BCH-DATA.bestBid) as buyOffer, perc99(BCH-DATA.bestAsk) as sellAsk, perc99(BCH-DATA.lastPrice) as lastSale, perc99(BCH-DATA.volume24h) as volume24h</query>
+          <earliest>$formToken_TimePicker.earliest$</earliest>
+          <latest>$formToken_TimePicker.latest$</latest>
+        </search>
+        <option name="charting.seriesColors">[0xbfe1ef,0xf4d89c,0xd45641,0x6a5d9c]</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">Volume (coins)</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.text">Coin Price ($AUD)</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">1</option>
+        <option name="charting.axisY2.scale">linear</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.axisLabelsY.majorUnit">3000</option>
+        <option name="charting.axisY.maximumNumber">auto</option>
+        <option name="charting.chart.overlayFields">buyOffer,sellAsk,lastSale</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>XRP (ripple)</title>
+        <search>
+          <query>index=main source=*Crypto* sourcetype=_json | timechart perc99(XRP-DATA.bestBid) as buyOffer, perc99(XRP-DATA.bestAsk) as sellAsk, perc99(XRP-DATA.lastPrice) as lastSale, perc99(XRP-DATA.volume24h) as volume24h</query>
+          <earliest>$formToken_TimePicker.earliest$</earliest>
+          <latest>$formToken_TimePicker.latest$</latest>
+        </search>
+        <option name="charting.seriesColors">[0xbfe1ef,0xf4d89c,0xd45641,0x6a5d9c]</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-90</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">Volume (coins)</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.text">Coin Price ($AUD)</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">1</option>
+        <option name="charting.axisY2.scale">linear</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.axisLabelsY.majorUnit">17000000</option>
+        <option name="charting.axisY.maximumNumber">auto</option>
+        <option name="charting.chart.overlayFields">buyOffer,sellAsk,lastSale</option>
+      </chart>
+    </panel>
+  </row>
+</form>
