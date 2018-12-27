@@ -1,6 +1,6 @@
 ########################################
-# VERSION:  1.1
-# UPDATED:  22/12/2017
+# VERSION:  1.2
+# UPDATED:  27/12/2018 
 # DESCRIP:  scripted inputs for bex36 splunk weather
 # NOTES:
 ########################################
