@@ -24,11 +24,15 @@ def _main():
 
     #INITIALISE THE DICTS
     bomCurDict = {}
+    bomFutDict = {}
 
     #GET CURRENT BOM DATA
-    bomCurDict = _collectBOMcurJSON(bomCurDict)
-    _spitJSONoutToSplunk(bomCurDict)
+#    bomCurDict = _collectBOMcurJSON(bomCurDict)
+#    _spitJSONoutToSplunk(bomCurDict)
 
+    #GET FUTURE BOM DATA
+    bomFutDict = _collectBOMpredXML(bomFutDict)
+    _spitJSONoutToSplunk(bomFutDict)
 
     scriptRunTime = {"ScriptRunTime_GETWEATHER.py":  time.time() - scriptStartTime}
     _spitJSONoutToSplunk(scriptRunTime)
@@ -38,6 +42,60 @@ def _logToFile():
 	f = open('/_LOCALDATA/_PROGDATA/SCRIPTS/_LOGS/ksplunkscriptedinput.log', 'a')
 	f.write('hi there myProgStartTime: ' + str(datetime.datetime.fromtimestamp(myProgStartTime).strftime('%c')) + '\n')  # python will convert \n to os.linesep
 	f.close()  # you can omit in most cases as the destructor will call it
+
+
+#---------------------------------------------------------------------------------------------------------------------------------------------------
+def _collectBOMpredXML(myDict):
+    myBOMStartTime = time.time()
+
+    url = "ftp://ftp.bom.gov.au/anon/gen/fwo/IDN10064.xml"
+
+###################
+    hdr = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36',
+           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+           'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+           'Accept-Encoding': 'none',
+           'Accept-Language': 'en-US,en;q=0.8',
+           'Connection': 'keep-alive'}
+    req = urllib2.Request(url, headers=hdr)
+    page = urllib2.urlopen(req)
+    tree = ET.fromstring(page.read())
+#    print (tree)
+#    root = tree.getroot()
+#    tree.attrib
+
+#    for child in tree:
+#        print(child.tag, child.attrib)
+
+#    for xxx in tree.iter('area'):
+#        print(xxx.attrib)
+#    show(tree)
+#    print myList
+########################
+#    myList = tree.findall("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='1']")
+#    print myList[0].attrib['start-time-local']
+#    for xxx in myList:
+#        print xxx.attrib['start-time-local']
+###########################
+#    for node in tree:
+#        print node
+
+    resultsDict = {"BOMxmlDlTime": time.time() - myBOMStartTime}
+
+    resultsDict.update( {"BOMPREDiconCode":     int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='1']/element/[@type='forecast_icon_code']").text) } )
+    resultsDict.update( {"BOMPREDtempMax":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='1']/element/[@type='air_temperature_maximum']").text) } )
+    resultsDict.update( {"BOMPREDtempMin":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='1']/element/[@type='air_temperature_minimum']").text) } )
+    resultsDict.update( {"BOMPREDrainChance":   int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='1']/text/[@type='probability_of_precipitation']").text.rstrip('%')) } )
+    resultsDict.update( {"BOMPREDdesc":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='1']/text/[@type='precis']").text } )
+
+
+    myDict.update(resultsDict)
+    return myDict
+
+def show(elem):
+    print elem.tag
+    for child in elem.findall('*'):
+        show(child)
 
 
 
