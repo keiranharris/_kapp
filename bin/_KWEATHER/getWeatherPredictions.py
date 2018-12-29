@@ -82,7 +82,7 @@ def _extractDayPrediction(tree, dayIndex):
 
     #XML FOR TODAY IS DIFFERENT
     if dayIndex == 0:
-        resultsDict.update( {"BOMPREDdate":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']").attrib['start-time-local'][:-15] } )   #[:-15] to trim the 15 chars off the date 'T00:00:00+11:00'
+        resultsDict.update( {"BOMPREDdate":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']").attrib['start-time-local'] } )   #[:-15] to trim the 15 chars off the date 'T00:00:00+11:00'
         resultsDict.update( {"BOMPREDiconCode":     int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='forecast_icon_code']").text) } )
         resultsDict.update( {"BOMPREDrainChance":   int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='probability_of_precipitation']").text.rstrip('%')) } )
         resultsDict.update( {"BOMPREDdescBrief":    tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']/text/[@type='precis']").text } )
@@ -93,7 +93,7 @@ def _extractDayPrediction(tree, dayIndex):
         resultsDict.update( {"BOMPREDfireDanger":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='fire_danger']").text } )
         resultsDict.update( {"BOMPREDuvAlert":      tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='uv_alert']").text } )
 
-        resultsDict.update( {"BOMPREDdate":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']").attrib['start-time-local'][:-15] } )   #[:-15] to trim the 15 chars off the date 'T00:00:00+11:00'
+        resultsDict.update( {"BOMPREDdate":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']").attrib['start-time-local'] } )   #[:-15] to trim the 15 chars off the date 'T00:00:00+11:00'
         resultsDict.update( {"BOMPREDiconCode":     int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='forecast_icon_code']").text) } )
         resultsDict.update( {"BOMPREDtempMax":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='air_temperature_maximum']").text) } )
         resultsDict.update( {"BOMPREDrainChance":   int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='probability_of_precipitation']").text.rstrip('%')) } )
@@ -102,7 +102,7 @@ def _extractDayPrediction(tree, dayIndex):
         #THE BELOW COMES FROM THE PARENT XML NSW_ME001
         resultsDict.update( {"BOMPREDdescDetail":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)        + "']/text/[@type='forecast']").text } )
     else:
-        resultsDict.update( {"BOMPREDdate":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']").attrib['start-time-local'][:-15] } )   #[:-15] to trim the 15 chars off the date 'T00:00:00+11:00'
+        resultsDict.update( {"BOMPREDdate":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']").attrib['start-time-local'] } )   #[:-15] to trim the 15 chars off the date 'T00:00:00+11:00'
         resultsDict.update( {"BOMPREDiconCode":     int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='forecast_icon_code']").text) } )
         resultsDict.update( {"BOMPREDtempMax":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='air_temperature_maximum']").text) } )
         resultsDict.update( {"BOMPREDrainChance":   int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='probability_of_precipitation']").text.rstrip('%')) } )
