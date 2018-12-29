@@ -53,24 +53,71 @@ def _collectBOMpredXML(myDict):
 
     resultsDict = {"BOMxmlDlTime": time.time() - myBOMStartTime}
     resultsDict.update( {"kCryptoDictType": 'BOMpredictions'} )
-    resultsDict.update( {"TODAY-PLUS-0":   _extractDayPrediction(tree,0) } )
-    resultsDict.update( {"TODAY-PLUS-1":   _extractDayPrediction(tree,1) } )
-    resultsDict.update( {"TODAY-PLUS-2":   _extractDayPrediction(tree,2) } )
-    resultsDict.update( {"TODAY-PLUS-3":   _extractDayPrediction(tree,3) } )
-    resultsDict.update( {"TODAY-PLUS-4":   _extractDayPrediction(tree,4) } )
-    resultsDict.update( {"TODAY-PLUS-5":   _extractDayPrediction(tree,5) } )
-    resultsDict.update( {"TODAY-PLUS-6":   _extractDayPrediction(tree,6) } )
+    #resultsDict.update( {"TODAY-PLUS-0":   _extractDayPrediction(tree,0) } )
+    #resultsDict.update( {"TODAY-PLUS-1":   _extractDayPrediction(tree,1) } )
+    #resultsDict.update( {"TODAY-PLUS-2":   _extractDayPrediction(tree,2) } )
+    #resultsDict.update( {"TODAY-PLUS-3":   _extractDayPrediction(tree,3) } )
+    #resultsDict.update( {"TODAY-PLUS-4":   _extractDayPrediction(tree,4) } )
+    #resultsDict.update( {"TODAY-PLUS-5":   _extractDayPrediction(tree,5) } )
+    #resultsDict.update( {"TODAY-PLUS-6":   _extractDayPrediction(tree,6) } )
+
+    _extractDayPrediction(tree,0)
+    _extractDayPrediction(tree,1)
+    _extractDayPrediction(tree,2)
+    _extractDayPrediction(tree,3)
+    _extractDayPrediction(tree,4)
+    _extractDayPrediction(tree,5)
+    _extractDayPrediction(tree,6)
+
+
     #SOMETIMES THERE IS 7, SOMETIMES NOT... I THINK IN THE ARVO THERE IT BECOMES AVAILABLE.... BETTER TO LIVE WITHOUT
     #resultsDict.update( {"TODAY-PLUS-7":   _extractDayPrediction(tree,7) } )
 
     myDict.update(resultsDict)
     return myDict
 
-
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 def _extractDayPrediction(tree, dayIndex):
     resultsDict = {}
 
+    #XML FOR TODAY IS DIFFERENT
+    if dayIndex == 0:
+        resultsDict.update( {"BOMPREDdate":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']").attrib['start-time-local'][:-15] } )   #[:-15] to trim the 15 chars off the date 'T00:00:00+11:00'
+        resultsDict.update( {"BOMPREDiconCode":     int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='forecast_icon_code']").text) } )
+        resultsDict.update( {"BOMPREDrainChance":   int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='probability_of_precipitation']").text.rstrip('%')) } )
+        resultsDict.update( {"BOMPREDdescBrief":    tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']/text/[@type='precis']").text } )
+        #THE BELOW COMES FROM THE PARENT XML NSW_ME001
+        resultsDict.update( {"BOMPREDdescDetail":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)        + "']/text/[@type='forecast']").text } )
+    elif dayIndex == 1:
+        resultsDict.update( {"BOMPREDsurfDanger":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='surf_danger']").text } )
+        resultsDict.update( {"BOMPREDfireDanger":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='fire_danger']").text } )
+        resultsDict.update( {"BOMPREDuvAlert":      tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='uv_alert']").text } )
+
+        resultsDict.update( {"BOMPREDdate":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']").attrib['start-time-local'][:-15] } )   #[:-15] to trim the 15 chars off the date 'T00:00:00+11:00'
+        resultsDict.update( {"BOMPREDiconCode":     int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='forecast_icon_code']").text) } )
+        resultsDict.update( {"BOMPREDtempMax":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='air_temperature_maximum']").text) } )
+        resultsDict.update( {"BOMPREDrainChance":   int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='probability_of_precipitation']").text.rstrip('%')) } )
+        resultsDict.update( {"BOMPREDdescBrief":    tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']/text/[@type='precis']").text } )
+        resultsDict.update( {"BOMPREDtempMin":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='air_temperature_minimum']").text) } )
+        #THE BELOW COMES FROM THE PARENT XML NSW_ME001
+        resultsDict.update( {"BOMPREDdescDetail":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)        + "']/text/[@type='forecast']").text } )
+    else:
+        resultsDict.update( {"BOMPREDdate":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']").attrib['start-time-local'][:-15] } )   #[:-15] to trim the 15 chars off the date 'T00:00:00+11:00'
+        resultsDict.update( {"BOMPREDiconCode":     int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='forecast_icon_code']").text) } )
+        resultsDict.update( {"BOMPREDtempMax":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='air_temperature_maximum']").text) } )
+        resultsDict.update( {"BOMPREDrainChance":   int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='probability_of_precipitation']").text.rstrip('%')) } )
+        resultsDict.update( {"BOMPREDdescBrief":    tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']/text/[@type='precis']").text } )
+        resultsDict.update( {"BOMPREDtempMin":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='air_temperature_minimum']").text) } )
+        #THE BELOW COMES FROM THE PARENT XML NSW_ME001
+        resultsDict.update( {"BOMPREDdescDetail":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)        + "']/text/[@type='forecast']").text } )
+
+    #NEED TO SPIT LINE BY LINE TO GET SEPERATE SPLUNK EVEMNTS
+    _spitJSONoutToSplunk(resultsDict)
+    return
+
+#---------------------------------------------------------------------------------------------------------------------------------------------------
+def _extractDayPredictionORIG(tree, dayIndex):
+    resultsDict = {}
     resultsDict.update( {"BOMPREDdate":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']").attrib['start-time-local'][:-15] } )   #[:-15] to trim the 15 chars off the date 'T00:00:00+11:00'
     resultsDict.update( {"BOMPREDiconCode":     int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='forecast_icon_code']").text) } )
     resultsDict.update( {"BOMPREDtempMax":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='air_temperature_maximum']").text) } )
@@ -84,10 +131,12 @@ def _extractDayPrediction(tree, dayIndex):
         resultsDict.update( {"BOMPREDsurfDanger":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='surf_danger']").text } )
         resultsDict.update( {"BOMPREDfireDanger":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='fire_danger']").text } )
         resultsDict.update( {"BOMPREDuvAlert":      tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='uv_alert']").text } )
-        return resultsDict
     else:
         resultsDict.update( {"BOMPREDtempMin":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='air_temperature_minimum']").text) } )
-        return resultsDict
+
+    #NEED TO SPIT LINE BY LINE TO GET SEPERATE SPLUNK EVEMNTS
+    _spitJSONoutToSplunk(resultsDict)
+    return
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 def _spitJSONoutToSplunk(myDict):
