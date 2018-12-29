@@ -1,7 +1,7 @@
 ########################################
 # VERSION:  1.2
-# UPDATED:  27/12/2018
-# DESCRIP:  scripted inputs for bex36 splunk weather
+# UPDATED:  29/12/2018
+# DESCRIP:  scripted inputs for bex36 splunk weather - CURRENT/OBSERVATIONS
 # NOTES:
 ########################################
 
@@ -12,9 +12,6 @@ import urllib2
 import time  			                #TO MEASURE EXECUTION TIMES
 import socket			                #FOR DNS OPERATIONS
 from subprocess import Popen, PIPE
-import xml.etree.ElementTree as ET      #FOR XML PARSING
-
-#GIT TEST
 
 #GLOBAL VARIABLES
 myProgStartTime = time.time()
@@ -73,6 +70,7 @@ def _collectBOMcurJSON(myDict):
     #	myList.append("BOMjsonDlTime=" + str(time.time() - myBOMStartTime))
 
     resultsDict = {"BOMjsonDlTime": time.time() - myBOMStartTime}
+    resultsDict.update( {"kCryptoDictType": 'BOMobservations'} )
 
     #METRICS AVAILABLE FOR EVERY POLL
     resultsDict.update( {"BOMdateTime":     float(data['observations']['data'][0]['local_date_time_full']) } )
