@@ -61,13 +61,13 @@ def _collectBOMpredXML(myDict):
     #resultsDict.update( {"TODAY-PLUS-5":   _extractDayPrediction(tree,5) } )
     #resultsDict.update( {"TODAY-PLUS-6":   _extractDayPrediction(tree,6) } )
 
-    _extractDayPrediction(tree,0)
-    _extractDayPrediction(tree,1)
-    _extractDayPrediction(tree,2)
-    _extractDayPrediction(tree,3)
-    _extractDayPrediction(tree,4)
-    _extractDayPrediction(tree,5)
-    _extractDayPrediction(tree,6)
+    _extractDayPrediction(tree,0,myBOMStartTime)
+    _extractDayPrediction(tree,1,myBOMStartTime)
+    _extractDayPrediction(tree,2,myBOMStartTime)
+    _extractDayPrediction(tree,3,myBOMStartTime)
+    _extractDayPrediction(tree,4,myBOMStartTime)
+    _extractDayPrediction(tree,5,myBOMStartTime)
+    _extractDayPrediction(tree,6,myBOMStartTime)
 
 
     #SOMETIMES THERE IS 7, SOMETIMES NOT... I THINK IN THE ARVO THERE IT BECOMES AVAILABLE.... BETTER TO LIVE WITHOUT
@@ -116,10 +116,9 @@ def _extractDayPrediction11PM(tree, dayIndex):
     return
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------
-def _extractDayPrediction(tree, dayIndex):
-    myBOMPollTime = time.time()
+def _extractDayPrediction(tree, dayIndex, myBOMPollTime):
     resultsDict = {}
-    resultsDict.update( {"BOMPREDapiPollTime":  myBOMPollTime } )     
+    resultsDict.update( {"BOMPREDapiPollTime":  myBOMPollTime } )
     myRainProb = int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='probability_of_precipitation']").text.rstrip('%'))
     resultsDict.update( {"BOMPREDdate":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']").attrib['start-time-local'] } )   #[:-15] to trim the 15 chars off the date 'T00:00:00+11:00'
     resultsDict.update( {"BOMPREDiconCode":     int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='forecast_icon_code']").text) } )
