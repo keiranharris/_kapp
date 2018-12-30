@@ -77,7 +77,7 @@ def _collectBOMpredXML(myDict):
     return myDict
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------
-def _extractDayPrediction(tree, dayIndex):
+def _extractDayPrediction11PM(tree, dayIndex):
     resultsDict = {}
 
     #XML FOR TODAY IS DIFFERENT
@@ -116,9 +116,9 @@ def _extractDayPrediction(tree, dayIndex):
     return
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------
-def _extractDayPredictionORIG(tree, dayIndex):
+def _extractDayPrediction(tree, dayIndex):
     resultsDict = {}
-    resultsDict.update( {"BOMPREDdate":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']").attrib['start-time-local'][:-15] } )   #[:-15] to trim the 15 chars off the date 'T00:00:00+11:00'
+    resultsDict.update( {"BOMPREDdate":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']").attrib['start-time-local'] } )   #[:-15] to trim the 15 chars off the date 'T00:00:00+11:00'
     resultsDict.update( {"BOMPREDiconCode":     int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='forecast_icon_code']").text) } )
     resultsDict.update( {"BOMPREDtempMax":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='air_temperature_maximum']").text) } )
     resultsDict.update( {"BOMPREDrainChance":   int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='probability_of_precipitation']").text.rstrip('%')) } )
@@ -128,7 +128,7 @@ def _extractDayPredictionORIG(tree, dayIndex):
 
     #XML FOR TODAY IS DIFFERENT
     if dayIndex == 0:
-        resultsDict.update( {"BOMPREDsurfDanger":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='surf_danger']").text } )
+#        resultsDict.update( {"BOMPREDsurfDanger":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='surf_danger']").text } )
         resultsDict.update( {"BOMPREDfireDanger":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='fire_danger']").text } )
         resultsDict.update( {"BOMPREDuvAlert":      tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='uv_alert']").text } )
     else:
