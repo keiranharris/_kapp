@@ -117,14 +117,21 @@ def _extractDayPrediction11PM(tree, dayIndex):
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 def _extractDayPrediction(tree, dayIndex):
+    myBOMPollTime = time.time()
     resultsDict = {}
+    resultsDict.update( {"BOMPREDapiPollTime":  myBOMPollTime } )     
+    myRainProb = int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='probability_of_precipitation']").text.rstrip('%'))
     resultsDict.update( {"BOMPREDdate":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']").attrib['start-time-local'] } )   #[:-15] to trim the 15 chars off the date 'T00:00:00+11:00'
     resultsDict.update( {"BOMPREDiconCode":     int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='forecast_icon_code']").text) } )
     resultsDict.update( {"BOMPREDtempMax":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='air_temperature_maximum']").text) } )
-    resultsDict.update( {"BOMPREDrainChance":   int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='probability_of_precipitation']").text.rstrip('%')) } )
+    resultsDict.update( {"BOMPREDrainChance":   myRainProb } )
     resultsDict.update( {"BOMPREDdescBrief":    tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']/text/[@type='precis']").text } )
     #THE BELOW COMES FROM THE PARENT XML NSW_ME001
     resultsDict.update( {"BOMPREDdescDetail":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)        + "']/text/[@type='forecast']").text } )
+
+    #RAIN MM IS ONLY SHOWN IF CHANCE OF RAIN IS 30% OR HIGHER...
+    if myRainProb >= 30:
+        resultsDict.update( {"BOMPREDrainMM":    tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']/element/[@type='precipitation_range']").text } )
 
     #XML FOR TODAY IS DIFFERENT
     if dayIndex == 0:
