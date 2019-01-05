@@ -122,23 +122,24 @@ def _extractDayPrediction(tree, dayIndex, myBOMPollTime):
     myRainProb = int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='probability_of_precipitation']").text.rstrip('%'))
     resultsDict.update( {"BOMPREDdate":         tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']").attrib['start-time-local'] } )   #[:-15] to trim the 15 chars off the date 'T00:00:00+11:00'
     resultsDict.update( {"BOMPREDiconCode":     int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='forecast_icon_code']").text) } )
-    resultsDict.update( {"BOMPREDtempMax":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='air_temperature_maximum']").text) } )
     resultsDict.update( {"BOMPREDrainChance":   myRainProb } )
     resultsDict.update( {"BOMPREDdescBrief":    tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']/text/[@type='precis']").text } )
     #THE BELOW COMES FROM THE PARENT XML NSW_ME001
     resultsDict.update( {"BOMPREDdescDetail":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)        + "']/text/[@type='forecast']").text } )
 
-    #RAIN MM IS ONLY SHOWN IF CHANCE OF RAIN IS 30% OR HIGHER...
-    if myRainProb >= 30:
-        resultsDict.update( {"BOMPREDrainMM":    tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']/element/[@type='precipitation_range']").text } )
 
     #XML FOR TODAY IS DIFFERENT
     if dayIndex == 0:
 #        resultsDict.update( {"BOMPREDsurfDanger":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='surf_danger']").text } )
-        resultsDict.update( {"BOMPREDfireDanger":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='fire_danger']").text } )
-        resultsDict.update( {"BOMPREDuvAlert":      tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='uv_alert']").text } )
+#        resultsDict.update( {"BOMPREDfireDanger":   tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='fire_danger']").text } )
+#        resultsDict.update( {"BOMPREDuvAlert":      tree.find("./forecast/area/[@aac='NSW_ME001']/forecast-period/[@index='" + str(dayIndex)    + "']/text/[@type='uv_alert']").text } )
+        pass
     else:
         resultsDict.update( {"BOMPREDtempMin":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='air_temperature_minimum']").text) } )
+        resultsDict.update( {"BOMPREDtempMax":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='air_temperature_maximum']").text) } )
+        #RAIN MM IS ONLY SHOWN IF CHANCE OF RAIN IS 30% OR HIGHER...
+        if myRainProb >= 30:
+            resultsDict.update( {"BOMPREDrainMM":    int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']/element/[@type='precipitation_range']").text.rstrip(' mm').lstrip('0123456789').lstrip(' to ')) } )   #LAZY CODE TO STRIP OUT THE MAX PREDUCTED RAINFALL WHICH COMES IN ORIGINAL FORMAT OF: '0 to 2 mm'
 
     #NEED TO SPIT LINE BY LINE TO GET SEPERATE SPLUNK EVEMNTS
     _spitJSONoutToSplunk(resultsDict)
