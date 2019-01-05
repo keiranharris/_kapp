@@ -1,5 +1,5 @@
 <form>
-  <label>[Bex36:: Weather]</label>
+  <label>[Bex36:: Weather - OBSERVATONS]</label>
   <fieldset submitButton="false" autoRun="false">
     <input type="time" token="formToken_PERIOD" searchWhenChanged="true">
       <label>Select Period</label>

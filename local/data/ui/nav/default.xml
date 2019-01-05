@@ -26,6 +26,7 @@
   </collection>
   <collection label="BEX36[WEATHER]">
     <view name="bex36_weather" />
+    <view name="bex36_weatherforecast" />
   </collection>
   <collection label="kSCRIPTS">
     <view name="crypto_scripthealth" />
