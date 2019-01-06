@@ -139,7 +139,7 @@ def _extractDayPrediction(tree, dayIndex, myBOMPollTime):
         resultsDict.update( {"BOMPREDtempMax":      int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)    + "']/element/[@type='air_temperature_maximum']").text) } )
         #RAIN MM IS ONLY SHOWN IF CHANCE OF RAIN IS 30% OR HIGHER...
         if myRainProb >= 30:
-            resultsDict.update( {"BOMPREDrainMM":    int(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']/element/[@type='precipitation_range']").text.rstrip(' mm').lstrip('0123456789').lstrip(' to ')) } )   #LAZY CODE TO STRIP OUT THE MAX PREDUCTED RAINFALL WHICH COMES IN ORIGINAL FORMAT OF: '0 to 2 mm'
+            resultsDict.update( {"BOMPREDrainMM":   float(tree.find("./forecast/area/[@aac='NSW_PT131']/forecast-period/[@index='" + str(dayIndex)        + "']/element/[@type='precipitation_range']").text.rstrip(' mm').lstrip('0123456789').lstrip(' to ')) } )   #LAZY CODE TO STRIP OUT THE MAX PREDUCTED RAINFALL WHICH COMES IN ORIGINAL FORMAT OF: '0 to 2 mm'
 
     #NEED TO SPIT LINE BY LINE TO GET SEPERATE SPLUNK EVEMNTS
     _spitJSONoutToSplunk(resultsDict)
