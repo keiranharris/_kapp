@@ -2,6 +2,7 @@
   <label>[Bex36:: Weather - PREDICTIONS]</label>
   <row>
     <panel>
+      <title>Temp Predictions</title>
       <chart>
         <search>
           <query>sourcetype=_jsonFUTURE BOMPREDdate | timechart latest(BOMPREDtempMin) as TempMin, latest(BOMPREDtempMax) as TempMax</query>
@@ -49,14 +50,17 @@
   </row>
   <row>
     <panel>
+      <title>Rain Predictions</title>
       <chart>
         <search>
-          <query>sourcetype=_jsonFUTURE BOMPREDdate | timechart latest(BOMPREDrainChance) as RainChance latest(BOMPREDrainMM) as RainMM</query>
+          <query>sourcetype=_jsonFUTURE BOMPREDdate 
+ | eventstats latest(BOMPREDapiPollTime) as latestPollTime 
+ | where BOMPREDapiPollTime=latestPollTime 
+ | timechart latest(BOMPREDrainChance) as RainChance latest(BOMPREDrainMM) as RainMM</query>
           <earliest>@d</earliest>
           <latest>+6d</latest>
           <sampleRatio>1</sampleRatio>
         </search>
-        <option name="charting.seriesColors">[0x0d94b1, 0x23237a]</option>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
         <option name="charting.axisTitleX.visibility">visible</option>
@@ -79,13 +83,15 @@
         <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
         <option name="charting.chart.stackMode">default</option>
         <option name="charting.chart.style">shiny</option>
-        <option name="charting.drilldown">none</option>
+        <option name="charting.drilldown">all</option>
         <option name="charting.layout.splitSeries">0</option>
         <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
         <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
         <option name="charting.legend.mode">standard</option>
         <option name="charting.legend.placement">right</option>
         <option name="charting.lineWidth">2</option>
+        <option name="charting.seriesColors">[0x0d94b1, 0x23237a]</option>
+        <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
@@ -94,15 +100,18 @@
   </row>
   <row>
     <panel>
+      <title>Predictions</title>
       <table>
+        <title>FROM::   ftp://ftp.bom.gov.au/anon/gen/fwo/IDN10064.xml</title>
         <search>
           <query>sourcetype=_jsonFUTURE BOMPREDdate 
  | eval Day = strftime(_time,"%a") | eval Date = strftime(_time,"%F") 
  | eventstats latest(BOMPREDapiPollTime) as latestPollTime 
  | where BOMPREDapiPollTime=latestPollTime 
  | sort _time 
- | table Day, Date, BOMPREDrainChance, BOMPREDrainMM, BOMPREDdescBrief, BOMPREDdescDetail,BOMPREDapiPollTime
- | rename BOMPREDrainChance as "Rain%", BOMPREDrainMM as "RainMM", BOMPREDdescBrief as "ForecastBrief", BOMPREDdescDetail as "ForecastDetail"</query>
+ | eval APItime = strftime(BOMPREDapiPollTime,  "%H:%M %p [%d-%m-%Y]")
+ | table Day, Date, BOMPREDrainChance, BOMPREDrainMM, BOMPREDtempMin, BOMPREDtempMax, BOMPREDdescBrief, BOMPREDdescDetail, APItime
+ | rename BOMPREDrainChance as "Rain%", BOMPREDrainMM as "mm", BOMPREDtempMin as "Min", BOMPREDtempMax as "Max", BOMPREDdescBrief as "ForecastBrief", BOMPREDdescDetail as "ForecastDetail"</query>
           <earliest>-d@d</earliest>
           <latest>+6d</latest>
           <sampleRatio>1</sampleRatio>
@@ -114,7 +123,7 @@
         <option name="refresh.display">progressbar</option>
         <option name="rowNumbers">false</option>
         <option name="totalsRow">false</option>
-        <option name="wrap">false</option>
+        <option name="wrap">true</option>
       </table>
     </panel>
   </row>
