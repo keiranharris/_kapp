@@ -167,3 +167,8 @@ export = none
 owner = keiran.harris
 version = 7.1.2
 modtime = 1547202349.675584000
+
+[inputs/script%3A%2F%2F%2FApplications%2FSplunk%2Fetc%2Fapps%2F_kapp%2Fbin%2F_KWEATHER%2FgetWeatherPredictions3hourly.py]
+owner = keiran.harris
+version = 7.1.2
+modtime = 1547368623.263925000

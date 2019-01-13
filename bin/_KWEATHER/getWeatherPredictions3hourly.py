@@ -103,7 +103,7 @@ def _collectBOMpred3hr(myDict):
             stdTime = dateToday + "T0" + str(hr) + ":00:00+11:00"             #  2019-01-13T17:00:00+11:00
         else:
             stdTime = dateToday + "T"  + str(hr) + ":00:00+11:00"
-        mydict =          {"h3time":          stdTime}
+        mydict =          {"h3aaaTime":       stdTime}                      #aaa so it sorts first, important for splunk making this the timestamp
         mydict.update   ( {"h3rainMM":        listRainMM_tdy[i]} )
         mydict.update   ( {"h3rainChance":    listRainChance_tdy[i]} )
         mydict.update   ( {"h3tempFeel":      listTempFeel_tdy[i]} )
@@ -123,7 +123,7 @@ def _collectBOMpred3hr(myDict):
             stdTime = dateTmr + "T0" + str(hr) + ":00:00+11:00"             #  2019-01-13T17:00:00+11:00
         else:
             stdTime = dateTmr + "T"  + str(hr) + ":00:00+11:00"
-        mydict =          {"h3time":          stdTime}
+        mydict =          {"h3aaatime":       stdTime}
         mydict.update   ( {"h3rainMM":        listRainMM_tmr[i]} )
         mydict.update   ( {"h3rainChance":    listRainChance_tmr[i]} )
         mydict.update   ( {"h3tempFeel":      listTempFeel_tmr[i]} )
