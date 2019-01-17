@@ -61,38 +61,49 @@ def _collectBOMpred3hr(myDict):
 
     now = datetime.datetime.now()
     tmr = now + datetime.timedelta(days=1)
-    dateToday = str(now.strftime('%Y')) + "-" + str(now.strftime('%m')) + "-" + str(now.strftime('%d'))   #needs to look like: 'd2019-01-13'
-    dateTmr   = str(tmr.strftime('%Y')) + "-" + str(tmr.strftime('%m')) + "-" + str(tmr.strftime('%d'))   #needs to look like: 'd2019-01-13'
+    plsTwo = now + datetime.timedelta(days=2)
+    plsThree = now + datetime.timedelta(days=3)
 
+    dateToday       = str(now.strftime('%Y')) + "-" + str(now.strftime('%m')) + "-" + str(now.strftime('%d'))   #needs to look like: 'd2019-01-13'
+    dateTmr         = str(tmr.strftime('%Y')) + "-" + str(tmr.strftime('%m')) + "-" + str(tmr.strftime('%d'))   #needs to look like: 'd2019-01-13'
+    datePlsTwo      = str(plsTwo.strftime('%Y')) + "-" + str(plsTwo.strftime('%m')) + "-" + str(plsTwo.strftime('%d'))   #needs to look like: 'd2019-01-13'
+    datePlsThree    = str(plsThree.strftime('%Y')) + "-" + str(plsThree.strftime('%m')) + "-" + str(plsThree.strftime('%d'))   #needs to look like: 'd2019-01-13'
+
+    #TODAY
     listRainMM_tdy =        _scrapeHTML(soup, dateToday, 'Rainfall', '50% chance of more than (mm)')
-    print (listRainMM_tdy)
     listRainChance_tdy =    _scrapeHTML(soup, dateToday, 'Rainfall', 'Chance of any rain')
-    print (listRainChance_tdy)
     listTempFeel_tdy =      _scrapeHTML(soup, dateToday, 'Temperatures', re.compile('^Feels like'))             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
-    print (listTempFeel_tdy)
     listUV_tdy =            _scrapeHTML(soup, dateToday, 'UV', 'UV Index')
-    print (listUV_tdy)
     listStorms_tdy =        _scrapeHTML(soup, dateToday, 'Significant Weather', 'Thunderstorms')
-    print (listStorms_tdy)
     listHumid_tdy =        _scrapeHTML(soup, dateToday, re.compile('Humidity '), re.compile('^Relative humidity'))   #regex needed as the specal chars 'Relative humidity (%)' throw a wobbly
-    print (listHumid_tdy)
 
 #WIND SPEED IS A BASTARD, AS THE BOM CODERS MESSED UP THE HTML. SO THIS IS NOT YET WORKING.... SEE BELOW 'THIS NEXT LINE IS SCREWED' IN THEW HTML
 #    listWindSp_tdy =        _scrapeHTML(soup, dateToday, re.compile('Humidity '), 'Wind speed')   #regex needed as the specal chars 'Relative humidity (%)' throw a wobbly
 #    print (listWindSp_tdy)
 
+    #TOMORROW
     listRainMM_tmr =        _scrapeHTML(soup, dateTmr, 'Rainfall', '50% chance of more than (mm)')
-    print (listRainMM_tmr)
     listRainChance_tmr =    _scrapeHTML(soup, dateTmr, 'Rainfall', 'Chance of any rain')
-    print (listRainChance_tmr)
     listTempFeel_tmr =      _scrapeHTML(soup, dateTmr, 'Temperatures', re.compile('^Feels like'))             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
-    print (listTempFeel_tmr)
     listUV_tmr =            _scrapeHTML(soup, dateTmr, 'UV', 'UV Index')             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
-    print (listUV_tmr)
     listStorms_tmr =        _scrapeHTML(soup, dateTmr, 'Significant Weather', 'Thunderstorms')             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
-    print (listStorms_tmr)
     listHumid_tmr =        _scrapeHTML(soup, dateTmr, 'Humidity & Wind', re.compile('^Relative humidity'))   #regex needed as the specal chars 'Relative humidity (%)' throw a wobbly
-    print (listHumid_tmr)
+
+    #DAY AFTER TOMORROW
+    listRainMM_plsTwo =        _scrapeHTML(soup, datePlsTwo, 'Rainfall', '50% chance of more than (mm)')
+    listRainChance_plsTwo =    _scrapeHTML(soup, datePlsTwo, 'Rainfall', 'Chance of any rain')
+    listTempFeel_plsTwo =      _scrapeHTML(soup, datePlsTwo, 'Temperatures', re.compile('^Feels like'))             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
+    listUV_plsTwo =            _scrapeHTML(soup, datePlsTwo, 'UV', 'UV Index')             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
+    listStorms_plsTwo =        _scrapeHTML(soup, datePlsTwo, 'Significant Weather', 'Thunderstorms')             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
+    listHumid_plsTwo =        _scrapeHTML(soup, datePlsTwo, 'Humidity & Wind', re.compile('^Relative humidity'))   #regex needed as the specal chars 'Relative humidity (%)' throw a wobbly
+
+    #DAY PLUS THREE
+    listRainMM_plsThree =        _scrapeHTML(soup, datePlsThree, 'Rainfall', '50% chance of more than (mm)')
+    listRainChance_plsThree =    _scrapeHTML(soup, datePlsThree, 'Rainfall', 'Chance of any rain')
+    listTempFeel_plsThree =      _scrapeHTML(soup, datePlsThree, 'Temperatures', re.compile('^Feels like'))             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
+    listUV_plsThree =            _scrapeHTML(soup, datePlsThree, 'UV', 'UV Index')             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
+    listStorms_plsThree =        _scrapeHTML(soup, datePlsThree, 'Significant Weather', 'Thunderstorms')             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
+    listHumid_plsThree =        _scrapeHTML(soup, datePlsThree, 'Humidity & Wind', re.compile('^Relative humidity'))   #regex needed as the specal chars 'Relative humidity (%)' throw a wobbly
 
 
     #TODAY
@@ -135,6 +146,46 @@ def _collectBOMpred3hr(myDict):
         hr = hr + 3
         i = i + 1
 
+    #DAY AFTER TOMORROW
+    i = 0
+    hr = 2
+    while i < 8:
+        if hr < 10:
+            stdTime = datePlsTwo + "T0" + str(hr) + ":00:00+11:00"             #  2019-01-13T17:00:00+11:00
+        else:
+            stdTime = datePlsTwo + "T"  + str(hr) + ":00:00+11:00"
+        mydict =          {"h3aaatime":       stdTime}
+        mydict.update   ( {"h3rainMM":        listRainMM_plsTwo[i]} )
+        mydict.update   ( {"h3rainChance":    listRainChance_plsTwo[i]} )
+        mydict.update   ( {"h3tempFeel":      listTempFeel_plsTwo[i]} )
+        mydict.update   ( {"h3uv":            listUV_plsTwo[i]} )
+        mydict.update   ( {"h3storms":        listStorms_plsTwo[i]} )
+        mydict.update   ( {"h3humid":         listHumid_plsTwo[i]} )
+        mydict.update   ( {"h3apiPollTime":   myProgStartTime } )
+        _spitJSONoutToSplunk(mydict)
+        hr = hr + 3
+        i = i + 1
+
+    #DAY PLUS THREE
+    i = 0
+    hr = 2
+    while i < 8:
+        if hr < 10:
+            stdTime = datePlsThree + "T0" + str(hr) + ":00:00+11:00"             #  2019-01-13T17:00:00+11:00
+        else:
+            stdTime = datePlsThree + "T"  + str(hr) + ":00:00+11:00"
+        mydict =          {"h3aaatime":       stdTime}
+        mydict.update   ( {"h3rainMM":        listRainMM_plsThree[i]} )
+        mydict.update   ( {"h3rainChance":    listRainChance_plsThree[i]} )
+        mydict.update   ( {"h3tempFeel":      listTempFeel_plsThree[i]} )
+        mydict.update   ( {"h3uv":            listUV_plsThree[i]} )
+        mydict.update   ( {"h3storms":        listStorms_plsThree[i]} )
+        mydict.update   ( {"h3humid":         listHumid_plsThree[i]} )
+        mydict.update   ( {"h3apiPollTime":   myProgStartTime } )
+        _spitJSONoutToSplunk(mydict)
+        hr = hr + 3
+        i = i + 1
+
 
     resultsDict = {"BOMxmlDlTime": time.time() - myBOMStartTime}
     resultsDict.update( {"kCryptoDictType": 'BOM3hrpredictions'} )
@@ -149,13 +200,10 @@ def _scrapeHTML(soup, argDate, argCat, argRow):
     argDatePrependD = "d" + argDate
     div = soup.find('div', {'id': argDatePrependD})
     heading = div.find('h3', text=argCat)
-#    print (heading.text)
     if argRow == 'Wind speed':
         tb = heading.findNext('tbody')
-#        print (tb.text)
     else:
         th = heading.findNext('th', text=argRow)
-#    print (th.text)
     td0200 = th.findNext('td')
     td0500 = td0200.findNext('td')
     td0800 = td0500.findNext('td')
