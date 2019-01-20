@@ -45,6 +45,7 @@ def _logToFile():
 
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------
+#VERY LAZY CODE IN HERE>.. COME BACK TO IT AND MAKE IT LOOPS...
 def _collectBOMpred3hr(myDict):
     myBOMStartTime = time.time()
     url = "http://www.bom.gov.au/places/nsw/sydney/forecast/detailed/"
@@ -63,11 +64,17 @@ def _collectBOMpred3hr(myDict):
     tmr = now + datetime.timedelta(days=1)
     plsTwo = now + datetime.timedelta(days=2)
     plsThree = now + datetime.timedelta(days=3)
+    plsFour = now + datetime.timedelta(days=4)
+    plsFive = now + datetime.timedelta(days=5)
+    plsSix = now + datetime.timedelta(days=6)
 
     dateToday       = str(now.strftime('%Y')) + "-" + str(now.strftime('%m')) + "-" + str(now.strftime('%d'))   #needs to look like: 'd2019-01-13'
     dateTmr         = str(tmr.strftime('%Y')) + "-" + str(tmr.strftime('%m')) + "-" + str(tmr.strftime('%d'))   #needs to look like: 'd2019-01-13'
     datePlsTwo      = str(plsTwo.strftime('%Y')) + "-" + str(plsTwo.strftime('%m')) + "-" + str(plsTwo.strftime('%d'))   #needs to look like: 'd2019-01-13'
-    datePlsThree    = str(plsThree.strftime('%Y')) + "-" + str(plsThree.strftime('%m')) + "-" + str(plsThree.strftime('%d'))   #needs to look like: 'd2019-01-13'
+    datePlsThree    = str(plsThree.strftime('%Y')) + "-" + str(plsThree.strftime('%m')) + "-" + str(plsThree.strftime('%d'))
+    datePlsFour     = str(plsFour.strftime('%Y')) + "-" + str(plsFour.strftime('%m')) + "-" + str(plsFour.strftime('%d'))
+    datePlsFive     = str(plsFive.strftime('%Y')) + "-" + str(plsFive.strftime('%m')) + "-" + str(plsFive.strftime('%d'))
+    datePlsSix      = str(plsSix.strftime('%Y')) + "-" + str(plsSix.strftime('%m')) + "-" + str(plsSix.strftime('%d'))
 
     #TODAY
     listRainMM_tdy =        _scrapeHTML(soup, dateToday, 'Rainfall', '50% chance of more than (mm)')
@@ -104,6 +111,30 @@ def _collectBOMpred3hr(myDict):
     listUV_plsThree =            _scrapeHTML(soup, datePlsThree, 'UV', 'UV Index')             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
     listStorms_plsThree =        _scrapeHTML(soup, datePlsThree, 'Significant Weather', 'Thunderstorms')             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
     listHumid_plsThree =        _scrapeHTML(soup, datePlsThree, 'Humidity & Wind', re.compile('^Relative humidity'))   #regex needed as the specal chars 'Relative humidity (%)' throw a wobbly
+
+    #DAY PLUS FOUR
+    listRainMM_plsFour =        _scrapeHTML(soup, datePlsFour, 'Rainfall', '50% chance of more than (mm)')
+    listRainChance_plsFour =    _scrapeHTML(soup, datePlsFour, 'Rainfall', 'Chance of any rain')
+    listTempFeel_plsFour =      _scrapeHTML(soup, datePlsFour, 'Temperatures', re.compile('^Feels like'))             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
+    listUV_plsFour =            _scrapeHTML(soup, datePlsFour, 'UV', 'UV Index')             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
+    listStorms_plsFour =        _scrapeHTML(soup, datePlsFour, 'Significant Weather', 'Thunderstorms')             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
+    listHumid_plsFour =        _scrapeHTML(soup, datePlsFour, 'Humidity & Wind', re.compile('^Relative humidity'))   #regex needed as the specal chars 'Relative humidity (%)' throw a wobbly
+
+    #DAY PLUS FIVE
+    listRainMM_plsFive =        _scrapeHTML(soup, datePlsFive, 'Rainfall', '50% chance of more than (mm)')
+    listRainChance_plsFive =    _scrapeHTML(soup, datePlsFive, 'Rainfall', 'Chance of any rain')
+    listTempFeel_plsFive =      _scrapeHTML(soup, datePlsFive, 'Temperatures', re.compile('^Feels like'))             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
+    listUV_plsFive =            _scrapeHTML(soup, datePlsFive, 'UV', 'UV Index')             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
+    listStorms_plsFive =        _scrapeHTML(soup, datePlsFive, 'Significant Weather', 'Thunderstorms')             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
+    listHumid_plsFive =        _scrapeHTML(soup, datePlsFive, 'Humidity & Wind', re.compile('^Relative humidity'))   #regex needed as the specal chars 'Relative humidity (%)' throw a wobbly
+
+    #DAY PLUS SIX
+    listRainMM_plsSix =        _scrapeHTML(soup, datePlsSix, 'Rainfall', '50% chance of more than (mm)')
+    listRainChance_plsSix =    _scrapeHTML(soup, datePlsSix, 'Rainfall', 'Chance of any rain')
+    listTempFeel_plsSix =      _scrapeHTML(soup, datePlsSix, 'Temperatures', re.compile('^Feels like'))             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
+    listUV_plsSix =            _scrapeHTML(soup, datePlsSix, 'UV', 'UV Index')             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
+    listStorms_plsSix =        _scrapeHTML(soup, datePlsSix, 'Significant Weather', 'Thunderstorms')             #regex needed as the specal chars 'Feels like (&deg;C)' throw a wobbly
+    listHumid_plsSix =        _scrapeHTML(soup, datePlsSix, 'Humidity & Wind', re.compile('^Relative humidity'))   #regex needed as the specal chars 'Relative humidity (%)' throw a wobbly
 
 
     #TODAY
@@ -186,6 +217,65 @@ def _collectBOMpred3hr(myDict):
         hr = hr + 3
         i = i + 1
 
+    #DAY PLUS FOUR
+    i = 0
+    hr = 2
+    while i < 8:
+        if hr < 10:
+            stdTime = datePlsFour + "T0" + str(hr) + ":00:00+11:00"             #  2019-01-13T17:00:00+11:00
+        else:
+            stdTime = datePlsFour + "T"  + str(hr) + ":00:00+11:00"
+        mydict =          {"h3aaatime":       stdTime}
+        mydict.update   ( {"h3rainMM":        listRainMM_plsFour[i]} )
+        mydict.update   ( {"h3rainChance":    listRainChance_plsFour[i]} )
+        mydict.update   ( {"h3tempFeel":      listTempFeel_plsFour[i]} )
+        mydict.update   ( {"h3uv":            listUV_plsFour[i]} )
+        mydict.update   ( {"h3storms":        listStorms_plsFour[i]} )
+        mydict.update   ( {"h3humid":         listHumid_plsFour[i]} )
+        mydict.update   ( {"h3apiPollTime":   myProgStartTime } )
+        _spitJSONoutToSplunk(mydict)
+        hr = hr + 3
+        i = i + 1
+
+    #DAY PLUS FIVE
+    i = 0
+    hr = 2
+    while i < 8:
+        if hr < 10:
+            stdTime = datePlsFive + "T0" + str(hr) + ":00:00+11:00"             #  2019-01-13T17:00:00+11:00
+        else:
+            stdTime = datePlsFive + "T"  + str(hr) + ":00:00+11:00"
+        mydict =          {"h3aaatime":       stdTime}
+        mydict.update   ( {"h3rainMM":        listRainMM_plsFive[i]} )
+        mydict.update   ( {"h3rainChance":    listRainChance_plsFive[i]} )
+        mydict.update   ( {"h3tempFeel":      listTempFeel_plsFive[i]} )
+        mydict.update   ( {"h3uv":            listUV_plsFive[i]} )
+        mydict.update   ( {"h3storms":        listStorms_plsFive[i]} )
+        mydict.update   ( {"h3humid":         listHumid_plsFive[i]} )
+        mydict.update   ( {"h3apiPollTime":   myProgStartTime } )
+        _spitJSONoutToSplunk(mydict)
+        hr = hr + 3
+        i = i + 1
+
+    #DAY PLUS SIX
+    i = 0
+    hr = 2
+    while i < 8:
+        if hr < 10:
+            stdTime = datePlsSix + "T0" + str(hr) + ":00:00+11:00"             #  2019-01-13T17:00:00+11:00
+        else:
+            stdTime = datePlsSix + "T"  + str(hr) + ":00:00+11:00"
+        mydict =          {"h3aaatime":       stdTime}
+        mydict.update   ( {"h3rainMM":        listRainMM_plsSix[i]} )
+        mydict.update   ( {"h3rainChance":    listRainChance_plsSix[i]} )
+        mydict.update   ( {"h3tempFeel":      listTempFeel_plsSix[i]} )
+        mydict.update   ( {"h3uv":            listUV_plsSix[i]} )
+        mydict.update   ( {"h3storms":        listStorms_plsSix[i]} )
+        mydict.update   ( {"h3humid":         listHumid_plsSix[i]} )
+        mydict.update   ( {"h3apiPollTime":   myProgStartTime } )
+        _spitJSONoutToSplunk(mydict)
+        hr = hr + 3
+        i = i + 1
 
     resultsDict = {"BOMxmlDlTime": time.time() - myBOMStartTime}
     resultsDict.update( {"kCryptoDictType": 'BOM3hrpredictions'} )

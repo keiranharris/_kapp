@@ -189,6 +189,7 @@ def _KRACKENapiNoAuth_getTickr(coinList):
 
     for i in range(len(coinList)):
         workingCoin = coinList[i]
+#        print(workingCoin)
         #CODE TO DIVE DOWN SEVERAL LAYERS OF THE JSON DATA STRUCTURE.... SEE THE JSON AT THE TAIL END OF THIS FILE TO UNDERSTAND
         fullCoinJson = x.query_public("Ticker", {"pair": coinList[i] } )
 #        print(fullCoinJson)

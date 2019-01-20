@@ -46,11 +46,11 @@ def _btcmTickerOps():
     btcmTkDict.update(    {"ETH-DATA":    _BTCMARKETS._BTCMapiNoAuth_getTickr("ETH", "AUD")} )
     btcmTkDict.update(    {"LTC-DATA":    _BTCMARKETS._BTCMapiNoAuth_getTickr("LTC", "AUD")} )
     btcmTkDict.update(    {"ETC-DATA":    _BTCMARKETS._BTCMapiNoAuth_getTickr("ETC", "AUD")} )
-    btcmTkDict.update(    {"BCH-DATA":    _BTCMARKETS._BTCMapiNoAuth_getTickr("BCH", "AUD")} )
+    btcmTkDict.update(    {"BCHABC-DATA":    _BTCMARKETS._BTCMapiNoAuth_getTickr("BCHABC", "AUD")} )
     btcmTkDict.update(    {"XRP-DATA":    _BTCMARKETS._BTCMapiNoAuth_getTickr("XRP", "AUD")} )
     _OUTPUT._spitJSONoutToSplunk(btcmTkDict)
     #UPDATE GSHEETS WITH ABOVE
-    btcmTickList_AUD    = [ [ btcmTkDict['BTC-DATA']['lastPrice'], btcmTkDict['ETH-DATA']['lastPrice'], btcmTkDict['LTC-DATA']['lastPrice'], btcmTkDict['ETC-DATA']['lastPrice'], btcmTkDict['BCH-DATA']['lastPrice'], btcmTkDict['XRP-DATA']['lastPrice'], ], ]
+    btcmTickList_AUD    = [ [ btcmTkDict['BTC-DATA']['lastPrice'], btcmTkDict['ETH-DATA']['lastPrice'], btcmTkDict['LTC-DATA']['lastPrice'], btcmTkDict['ETC-DATA']['lastPrice'], btcmTkDict['BCHABC-DATA']['lastPrice'], btcmTkDict['XRP-DATA']['lastPrice'], ], ]
     _GOOGLE._publishToGoogleSheet(btcmTickList_AUD, 'USER_ENTERED', '[CryptoSum]!C8:C13',       'COLUMNS')
 
     return
@@ -58,8 +58,8 @@ def _btcmTickerOps():
 def _btcmAccountOps():
     balancesDict = _BTCMARKETS._BTCMapiAuth_getBal("GET", "/account/balance", BTCMapiKeyPub_m, BTCMapiKeyPri_m)
     _OUTPUT._spitJSONoutToSplunk(balancesDict)
-    BTCMBalList  = [ [ balancesDict['BTC-BAL']['balance'], balancesDict['ETH-BAL']['balance'], balancesDict['LTC-BAL']['balance'], balancesDict['ETC-BAL']['balance'], balancesDict['BCH-BAL']['balance'], balancesDict['XRP-BAL']['balance'], balancesDict['AUD-BAL']['balance'],  ], ]
-    BTCMPendList = [ [ balancesDict['BTC-BAL']['pending'], balancesDict['ETH-BAL']['pending'], balancesDict['LTC-BAL']['pending'], balancesDict['ETC-BAL']['pending'], balancesDict['BCH-BAL']['pending'], balancesDict['XRP-BAL']['pending'], balancesDict['AUD-BAL']['pending'],  ], ]
+    BTCMBalList  = [ [ balancesDict['BTC-BAL']['balance'], balancesDict['ETH-BAL']['balance'], balancesDict['LTC-BAL']['balance'], balancesDict['ETC-BAL']['balance'], balancesDict['BCHABC-BAL']['balance'], balancesDict['XRP-BAL']['balance'], balancesDict['AUD-BAL']['balance'],  ], ]
+    BTCMPendList = [ [ balancesDict['BTC-BAL']['pending'], balancesDict['ETH-BAL']['pending'], balancesDict['LTC-BAL']['pending'], balancesDict['ETC-BAL']['pending'], balancesDict['BCHABC-BAL']['pending'], balancesDict['XRP-BAL']['pending'], balancesDict['AUD-BAL']['pending'],  ], ]
     _GOOGLE._publishToGoogleSheet(BTCMBalList, 'USER_ENTERED','[CryptoSum]!I8',   'COLUMNS')
     _GOOGLE._publishToGoogleSheet(BTCMPendList,'USER_ENTERED','[CryptoSum]!J8',   'COLUMNS')
     return

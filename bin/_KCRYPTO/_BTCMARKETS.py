@@ -82,7 +82,7 @@ def _BTCMapiAuth_getBal(method, path, pubKey, priKey):
     resultsDict.update(   {str(data3[0]['currency'])+'-BAL': {"balance": float(data3[0]['balance'] - data3[0]['pendingFunds'])/100000000, "aaCoin": data3[0]['currency'], "pending": float(data3[0]['pendingFunds'])/100000000, } } )
     data3 = (filter(lambda data2: data2['currency'] == 'ETC', data))
     resultsDict.update(   {str(data3[0]['currency'])+'-BAL': {"balance": float(data3[0]['balance'] - data3[0]['pendingFunds'])/100000000, "aaCoin": data3[0]['currency'], "pending": float(data3[0]['pendingFunds'])/100000000, } } )
-    data3 = (filter(lambda data2: data2['currency'] == 'BCH', data))
+    data3 = (filter(lambda data2: data2['currency'] == 'BCHABC', data))
     resultsDict.update(   {str(data3[0]['currency'])+'-BAL': {"balance": float(data3[0]['balance'] - data3[0]['pendingFunds'])/100000000, "aaCoin": data3[0]['currency'], "pending": float(data3[0]['pendingFunds'])/100000000, } } )
     data3 = (filter(lambda data2: data2['currency'] == 'XRP', data))
     resultsDict.update(   {str(data3[0]['currency'])+'-BAL': {"balance": float(data3[0]['balance'] - data3[0]['pendingFunds'])/100000000, "aaCoin": data3[0]['currency'], "pending": float(data3[0]['pendingFunds'])/100000000, } } )

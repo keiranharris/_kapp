@@ -33,6 +33,7 @@ def _collectNANOPOOLdata():
     page = urllib2.urlopen(req)
     content = page.read()
     resultsDict = json.loads(content)
+#    _OUTPUT._spitJSONoutToSplunk(resultsDict)
     #when it fails (as it frequently does, shitty API) resultsDict = {"status":false,"error":"No data found"}
     if not resultsDict['status']:
         myNanoDict = {"ERROR":                      "nanopool API fail"}
@@ -43,9 +44,10 @@ def _collectNANOPOOLdata():
         myNanoDict.update( {"ETHminingBal":         float(resultsDict['data']['balance']) } )
         myNanoDict.update( {"hashRate":             float(resultsDict['data']['hashrate']) } )
         myNanoDict.update( {"hashRate1hrAvg":       float(resultsDict['data']['avgHashrate']['h1']) } )
-        myNanoDict.update( {"rig1hashRate":         float(resultsDict['data']['workers'][0]['hashrate']) } )
-        myNanoDict.update( {"rig1hashRate1hrAvg":   float(resultsDict['data']['workers'][0]['h1']) } )
-        myNanoDict.update( {"rig1lastShare":        float(resultsDict['data']['workers'][0]['lastshare']) } )
+#2018.01.20: COMMENTING OUT THE BELOW WHILE RIG IS OFF AS OTHERWISE IT THROWS ERROR, AS 'workers' IN THE JSON IS AN EMPTY LIST. UNCOMMENT THE ABOVE TO CONFIRM WHEN RETESTING: _OUTPUT._spitJSONoutToSplunk(resultsDict)  
+#        myNanoDict.update( {"rig1hashRate":         float(resultsDict['data']['workers'][0]['hashrate']) } )
+#        myNanoDict.update( {"rig1hashRate1hrAvg":   float(resultsDict['data']['workers'][0]['h1']) } )
+#        myNanoDict.update( {"rig1lastShare":        float(resultsDict['data']['workers'][0]['lastshare']) } )
         myNanoDict.update( {"status":               resultsDict['status']} )
     return myNanoDict
 

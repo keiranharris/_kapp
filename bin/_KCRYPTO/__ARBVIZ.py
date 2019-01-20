@@ -34,11 +34,13 @@ def _btcmTickerOps():
     btcmTkDict.update(    {"ETH-DATA":    _BTCMARKETS._BTCMapiNoAuth_getTickr("ETH", "AUD")} )
     btcmTkDict.update(    {"LTC-DATA":    _BTCMARKETS._BTCMapiNoAuth_getTickr("LTC", "AUD")} )
     btcmTkDict.update(    {"ETC-DATA":    _BTCMARKETS._BTCMapiNoAuth_getTickr("ETC", "AUD")} )
-    btcmTkDict.update(    {"BCH-DATA":    _BTCMARKETS._BTCMapiNoAuth_getTickr("BCH", "AUD")} )
+    btcmTkDict.update(    {"BCHABC-DATA": _BTCMARKETS._BTCMapiNoAuth_getTickr("BCHABC", "AUD")} )
     btcmTkDict.update(    {"XRP-DATA":    _BTCMARKETS._BTCMapiNoAuth_getTickr("XRP", "AUD")} )
 
     #UPDATE GSHEETS WITH ABOVE
-    btcmTickList_AUD    = [ [ btcmTkDict['BTC-DATA']['lastPrice'], btcmTkDict['ETH-DATA']['lastPrice'], btcmTkDict['LTC-DATA']['lastPrice'], btcmTkDict['ETC-DATA']['lastPrice'], btcmTkDict['BCH-DATA']['lastPrice'], btcmTkDict['XRP-DATA']['lastPrice'], ], ]
+    btcmTickList_AUD    = [ [ btcmTkDict['BTC-DATA']['lastPrice'], btcmTkDict['ETH-DATA']['lastPrice'], btcmTkDict['LTC-DATA']['lastPrice'], btcmTkDict['ETC-DATA']['lastPrice'], btcmTkDict['BCHABC-DATA']['lastPrice'], btcmTkDict['XRP-DATA']['lastPrice'], ], ]
+#    btcmTickList_AUD    = [ [ btcmTkDict['BTC-DATA']['lastPrice'], btcmTkDict['ETH-DATA']['lastPrice'], btcmTkDict['LTC-DATA']['lastPrice'], btcmTkDict['ETC-DATA']['lastPrice'], btcmTkDict['XRP-DATA']['lastPrice'], ], ]
+
     _GOOGLE._publishToGoogleSheet(btcmTickList_AUD, 'USER_ENTERED', '[arbFIAT]!C8',       'COLUMNS')
     return
 
@@ -85,7 +87,7 @@ def _readDeltaSpitToSplunk():
     innerList = googleSheetBlock[3]
     deltaDict.update ( {"ETC": {"remoteExchange": "kracken", "currencyBase" : "EUR", "delta": float(innerList[0])} } )
     innerList = googleSheetBlock[4]
-    deltaDict.update ( {"BCH": {"remoteExchange": "kracken", "currencyBase" : "EUR", "delta": float(innerList[0])} } )
+    deltaDict.update ( {"BCHABC": {"remoteExchange": "kracken", "currencyBase" : "EUR", "delta": float(innerList[0])} } )
     innerList = googleSheetBlock[5]
     deltaDict.update ( {"XRP": {"remoteExchange": "kracken", "currencyBase" : "EUR", "delta": float(innerList[0])} } )
     _OUTPUT._spitJSONoutToSplunk(deltaDict)
