@@ -15,7 +15,7 @@
       <chart>
         <title>BTCM-to-KRACKEN Deltas (against EUR)</title>
         <search>
-          <query>sourcetype=_json exchArbDeltas | timechart span=5m avg(BTC.delta) as BTCdelta, avg(ETH.delta) as ETHdelta, avg(LTC.delta) as LTCdelta, avg(ETC.delta) as ETCdelta, avg(BCH.delta) as BCHdelta, avg(XRP.delta) as XRPdelta,</query>
+          <query>sourcetype=_json exchArbDeltas | timechart span=5m avg(BTC.delta) as BTCdelta, avg(ETH.delta) as ETHdelta, avg(LTC.delta) as LTCdelta, avg(ETC.delta) as ETCdelta, avg(BCHABC.delta) as BCHABCdelta, avg(XRP.delta) as XRPdelta,</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
@@ -42,6 +42,7 @@
         <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
         <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
         <option name="charting.legend.placement">right</option>
+        <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
     <panel>
@@ -87,7 +88,7 @@
       <chart>
         <title>BTCM-to-KRACKEN Deltas (against EUR)</title>
         <search>
-          <query>sourcetype=_json exchArbDeltas | timechart  avg(BTC.delta) as BTCdelta, avg(ETH.delta) as ETHdelta, avg(LTC.delta) as LTCdelta, avg(ETC.delta) as ETCdelta, avg(BCH.delta) as BCHdelta, avg(XRP.delta) as XRPdelta,</query>
+          <query>sourcetype=_json exchArbDeltas | timechart  avg(BTC.delta) as BTCdelta, avg(ETH.delta) as ETHdelta, avg(LTC.delta) as LTCdelta, avg(ETC.delta) as ETCdelta, avg(BCHABC.delta) as BCHABCdelta, avg(XRP.delta) as XRPdelta,</query>
           <earliest>$formToken_TimePicker.earliest$</earliest>
           <latest>$formToken_TimePicker.latest$</latest>
         </search>
@@ -114,6 +115,7 @@
         <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
         <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
         <option name="charting.legend.placement">right</option>
+        <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
     <panel>
@@ -158,7 +160,7 @@
       <chart>
         <title>BTCM-to-KRACKEN Deltas (against EUR)</title>
         <search>
-          <query>sourcetype=_json exchArbDeltas | timechart  perc90(BTC.delta) as BTCdelta, perc90(ETH.delta) as ETHdelta, perc90(LTC.delta) as LTCdelta, perc90(ETC.delta) as ETCdelta, perc90(BCH.delta) as BCHdelta, perc90(XRP.delta) as XRPdelta,</query>
+          <query>sourcetype=_json exchArbDeltas | timechart  perc90(BTC.delta) as BTCdelta, perc90(ETH.delta) as ETHdelta, perc90(LTC.delta) as LTCdelta, perc90(ETC.delta) as ETCdelta, perc90(BCHABC.delta) as BCHABCdelta, perc90(XRP.delta) as XRPdelta,</query>
           <earliest>$formToken_TimePicker.earliest$</earliest>
           <latest>$formToken_TimePicker.latest$</latest>
         </search>
@@ -185,6 +187,7 @@
         <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
         <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
         <option name="charting.legend.placement">right</option>
+        <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
     <panel>

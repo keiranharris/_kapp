@@ -30,8 +30,8 @@ modtime = 1521922450.417374000
 access = read : [ * ], write : [ admin, can_delete, power ]
 export = none
 owner = keiran.harris
-version = 6.4.0
-modtime = 1518824251.818546000
+version = 7.1.2
+modtime = 1547949089.663343000
 
 [views/crypto_mining]
 access = read : [ * ], write : [ admin, can_delete, power ]
@@ -91,8 +91,8 @@ modtime = 1516487554.824962000
 access = read : [ * ], write : [ admin, power ]
 export = none
 owner = keiran.harris
-version = 6.4.0
-modtime = 1518818722.303040000
+version = 7.1.2
+modtime = 1547949720.216404000
 
 [inputs/script%3A%2F%2F%2FApplications%2FSplunk%2Fetc%2Fapps%2F_kapp%2Fbin%2F_KCRYPTO%2F__ARBVIZ.py]
 owner = keiran.harris
@@ -120,15 +120,15 @@ modtime = 1520664115.082939000
 access = read : [ * ], write : [ admin, can_delete, power ]
 export = none
 owner = keiran.harris
-version = 6.4.0
-modtime = 1518820134.801363000
+version = 7.1.2
+modtime = 1547949348.895439000
 
 [views/crypto_markets_longterm]
 access = read : [ * ], write : [ admin, can_delete, power ]
 export = none
 owner = keiran.harris
-version = 6.4.0
-modtime = 1518824196.456530000
+version = 7.1.2
+modtime = 1547949130.641240000
 
 [savedsearches/Rig%20Needs%20Reboot%20-%20WATCHDOG%20GPU%20Error]
 access = read : [ * ], write : [ admin, can_delete, power, splunk-system-role, user ]
