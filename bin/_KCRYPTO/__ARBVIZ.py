@@ -8,7 +8,8 @@ import _OUTPUT
 import _GOOGLE
 import _BTCMARKETS
 import _KRACKEN
-import _1FORGE
+#import _1FORGE   (moved off these guiys after 1forge started charging for their API - 20190516)
+import _FOREX
 
 import time  			#TO MEASURE EXECUTION TIMES,
 from time import gmtime, strftime #AND TIMESTAMP API WRITES
@@ -62,9 +63,11 @@ def _arbKrakenGBP():
 
 
 def _forexRates():
-    my1forgeAPIkey     = _CRYPTOCONFIG.my1forgeAPIkey
-    forexEURAUD = _1FORGE._getForex(my1forgeAPIkey,'EURAUD')
-    forexGBPAUD = _1FORGE._getForex(my1forgeAPIkey,'GBPAUD')
+    forexEURAUD = _FOREX._getForex('EUR', 'AUD')
+    forexGBPAUD = _FOREX._getForex('GBP', 'AUD')
+#    forexGBPAUD = _1FORGE._getForex(my1forgeAPIkey,'GBPAUD')
+#    forexEURAUD = 1.666666
+#    forexGBPAUD = 1.888888
     resultsList = [ [ forexEURAUD,forexGBPAUD, ], ]
     _GOOGLE._publishToGoogleSheet(resultsList, 'USER_ENTERED', '[arbFIAT]!C2',       'COLUMNS')
 
