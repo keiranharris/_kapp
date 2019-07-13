@@ -154,7 +154,7 @@ modtime = 1532767869.282897000
 [views/bex36_internet_dataModel]
 owner = keiran.harris
 version = 7.1.2
-modtime = 1547374847.454535000
+modtime = 1562416709.346917000
 
 [inputs/script%3A%2F%2F%2FApplications%2FSplunk%2Fetc%2Fapps%2F_kapp%2Fbin%2F_KWEATHER%2FgetWeatherPredictions.py]
 owner = keiran.harris
@@ -172,3 +172,13 @@ modtime = 1547943385.702567000
 owner = keiran.harris
 version = 7.1.2
 modtime = 1547721862.641243000
+
+[views/bex36_internet_micro]
+owner = keiran
+version = 7.1.2
+modtime = 1562472878.298461000
+
+[inputs/snmp%3A%2F%2Fstinka]
+owner = keiran
+version = 7.1.2
+modtime = 1562476761.198694000
