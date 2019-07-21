@@ -14,7 +14,7 @@ modtime = 1515271876.353357000
 
 [nav/default]
 version = 7.1.2
-modtime = 1546137064.678987000
+modtime = 1563694155.917840000
 
 [inputs/script%3A%2F%2F%2FApplications%2FSplunk%2Fetc%2Fapps%2F_kapp%2Fbin%2F_KNETWORK%2FgetISPperformance.py]
 owner = keiran.harris
@@ -42,10 +42,10 @@ modtime = 1532738549.257259000
 
 [views/bex36_weather]
 access = read : [ * ], write : [ admin, can_delete, power ]
-export = none
+export = system
 owner = keiran.harris
 version = 7.1.2
-modtime = 1546137164.786351000
+modtime = 1563694083.398726000
 
 [views/bex36_internet]
 access = read : [ * ], write : [ admin, can_delete, power ]
@@ -187,3 +187,10 @@ modtime = 1563688388.596470000
 owner = keiran
 version = 7.1.2
 modtime = 1563688492.695366000
+
+[views/bex36_pfsense]
+access = read : [ * ], write : [ * ]
+export = system
+owner = keiran
+version = 7.1.2
+modtime = 1563694071.741085000
