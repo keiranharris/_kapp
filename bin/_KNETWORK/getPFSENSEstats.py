@@ -18,22 +18,24 @@ PFSENSEIP = '10.1.5.1'
 
 '''
 {
-    "kNetworkDictType": 'pfsense'
-    "data": {
-        "memInUse": {
-            "snmpOID": "1.3.6.1.2.1.25.2.3.1.6.1",
-            "value": "xxx"
-        }
-    }
+    "MemInUse": 36879,
+    "ScriptRunTime_GETPFSENSESTATS.py": 0.25839996337890625,
+    "kNetworkDictType": "pfsense",
+    "searchesAgainstState": 571312576,
+    "stateTableSessions": 707,
+    "vCPU1load": 0,
+    "vCPU2load": 0,
+    "vtnet0BytesInDeny": 844529,
+    "vtnet0BytesInPass": 181283352077,
+    "vtnet0BytesOutDeny": 1360,
+    "vtnet0BytesOutPass": 22475090420,
+    "vtnet0ppsIn": 164209342,
+    "vtnet0ppsOut": 117603229
 }
 '''
 
 def _main():
     scriptStartTime = time.time()
-
-    myDict = {}
-    myDict = {"kNetworkDictType": 'pfsense'}
-
 
     oidList = []
     oidList.append('1.3.6.1.2.1.25.2.3.1.6.1')                    #memory in use
@@ -54,6 +56,8 @@ def _main():
 
     snmpDict = _snmpPoke(PFSENSEIP, oidList, hlapi.CommunityData('s3cur3d'))
     #_spitJSONoutToSplunk(hello)
+
+    myDict = {"kNetworkDictType": 'pfsense'}
 
     for kOid, kValue in snmpDict.items():
         #print(kOid, ":", kOid)
@@ -82,10 +86,9 @@ def _main():
         if kOid == '1.3.6.1.4.1.12325.1.200.1.8.2.1.13.10':
             myDict.update(    {"vtnet0ppsOut":    kValue} )
 
+    myDict.update(    {"ScriptRunTime_GETPFSENSESTATS.py":  time.time() - scriptStartTime} )
     _spitJSONoutToSplunk(myDict)
 
-    scriptRunTime = {"ScriptRunTime_GETPFSENSESTATS.py":  time.time() - scriptStartTime}
-    _spitJSONoutToSplunk(scriptRunTime)
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 def _snmpPoke(target, oids, credentials, port=161, engine=hlapi.SnmpEngine(), context=hlapi.ContextData()):
