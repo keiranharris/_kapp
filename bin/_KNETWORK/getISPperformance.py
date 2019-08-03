@@ -12,6 +12,8 @@ import urllib, json
 import time  			#TO MEASURE EXECUTION TIMES
 import socket			#FOR DNS OPERATIONS
 from subprocess import Popen, PIPE
+from pythonping import ping     #for ping
+
 
 #GLOBAL VARIABLES
 myProgStartTime = time.time()
@@ -26,8 +28,9 @@ def _main():
 
     myDict 	        = {}
     myDict 	        = _collectDNSdata(myDict)
+#    myDict 	        = _collectPINGdata(myDict)                 ............pythonping only supports python v3 so diable until then
     myDict          = _collectCURLdata(myDict, CURL_EXECUTABLE)
-    myDict          = _collectIPERFdata(myDict, IPERF_EXECUTABLE)
+#    myDict          = _collectIPERFdata(myDict, IPERF_EXECUTABLE)
     myDict          = _collectSPEEDTESTdata(myDict, SPEEDTEST_EXECUTABLE)
     _spitJSONoutToSplunk(myDict)
     #_logToFile()
@@ -51,6 +54,12 @@ def _collectDNSdata(myDict):
     myDict.update(resultsDict)
     return myDict
 
+def _collectPINGdata(myDict):
+    response_list = ping('8.8.8.8')
+    print (response_list.rtt_avg_ms)
+    #resultsDict = {"PINGtime": response_list.rtt_avg_ms}
+    myDict.update(resultsDict)
+    return myDict
 
 def _collectCURLdata(myDict, executable):
     args = list()

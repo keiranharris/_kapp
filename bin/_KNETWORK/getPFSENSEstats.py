@@ -16,7 +16,7 @@ import os               #TO WORK AROUND LACK OF UPDATE PROBLEM
 
 PFSENSEIP = '10.1.5.1'
 
-'''
+''' EXAMPLE JSON OUTPUT
 {
     "MemInUse": 36879,
     "ScriptRunTime_GETPFSENSESTATS.py": 0.25839996337890625,
