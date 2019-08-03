@@ -12,7 +12,7 @@ import urllib, json
 import time  			#TO MEASURE EXECUTION TIMES
 import socket			#FOR DNS OPERATIONS
 from subprocess import Popen, PIPE
-from pythonping import ping     #for ping
+#from pythonping import ping     #for ping
 
 
 #GLOBAL VARIABLES
