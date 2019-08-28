@@ -27,7 +27,8 @@ def _main():
     myDict 	        = {}
     myDict 	        = _collectDNSdata(myDict)
     myDict          = _collectCURLdata(myDict, CURL_EXECUTABLE)
-    myDict          = _collectIPERFdata(myDict, IPERF_EXECUTABLE)
+    #COMMENTED OUT AUG2019 AS IT WAS ALWAYS 'SERVER BUSY' AND TAKING AGES TO RETURN (>180secs)
+    #myDict          = _collectIPERFdata(myDict, IPERF_EXECUTABLE)
     myDict          = _collectSPEEDTESTdata(myDict, SPEEDTEST_EXECUTABLE)
     _spitJSONoutToSplunk(myDict)
     #_logToFile()
