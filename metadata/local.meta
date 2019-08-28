@@ -96,25 +96,25 @@ modtime = 1547949720.216404000
 
 [inputs/script%3A%2F%2F%2FApplications%2FSplunk%2Fetc%2Fapps%2F_kapp%2Fbin%2F_KCRYPTO%2F__ARBVIZ.py]
 owner = keiran.harris
-version = 6.4.0
-modtime = 1517492566.175403000
+version = 7.1.2
+modtime = 1566981468.716458000
 
 [inputs/script%3A%2F%2F%2FApplications%2FSplunk%2Fetc%2Fapps%2F_kapp%2Fbin%2F_KCRYPTO%2F__CRYPTOVIZ.py]
 owner = keiran.harris
-version = 6.4.0
-modtime = 1517492628.323525000
+version = 7.1.2
+modtime = 1566981472.655792000
 
 [inputs/script%3A%2F%2F%2FApplications%2FSplunk%2Fetc%2Fapps%2F_kapp%2Fbin%2F_KCRYPTO%2F__MARKETLOOPVIZ.py]
 owner = keiran.harris
-version = 6.4.0
-modtime = 1521922626.727604000
+version = 7.1.2
+modtime = 1566981474.491459000
 
 [views/crypto_scripthealth]
 access = read : [ * ], write : [ admin, can_delete, power ]
 export = none
 owner = keiran.harris
-version = 6.4.0
-modtime = 1520664115.082939000
+version = 7.1.2
+modtime = 1566981744.027322000
 
 [views/crypto_arbitrage]
 access = read : [ * ], write : [ admin, can_delete, power ]
@@ -154,7 +154,7 @@ modtime = 1532767869.282897000
 [views/bex36_internet_dataModel]
 owner = keiran.harris
 version = 7.1.2
-modtime = 1564817813.167606000
+modtime = 1566982331.033922000
 
 [inputs/script%3A%2F%2F%2FApplications%2FSplunk%2Fetc%2Fapps%2F_kapp%2Fbin%2F_KWEATHER%2FgetWeatherPredictions.py]
 owner = keiran.harris
@@ -176,7 +176,7 @@ modtime = 1547721862.641243000
 [views/bex36_internet_micro]
 owner = keiran
 version = 7.1.2
-modtime = 1562472878.298461000
+modtime = 1566982249.016523000
 
 [inputs/snmp%3A%2F%2Fstinka]
 owner = keiran

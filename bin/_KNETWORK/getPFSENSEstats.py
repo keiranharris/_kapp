@@ -43,12 +43,12 @@ def _main():
     oidList.append('1.3.6.1.2.1.25.3.3.1.2.76')                   #vCPU-2 load
     oidList.append('1.3.6.1.4.1.12325.1.200.1.3.1.0')             #state table (session count)
     oidList.append('1.3.6.1.4.1.12325.1.200.1.3.2.0')             #searhes against state table
-    oidList.append('1.3.6.1.4.1.12325.1.200.1.8.2.1.7.10')        #Bytes in PASS (vtnet0)
-    oidList.append('1.3.6.1.4.1.12325.1.200.1.8.2.1.8.10')        #Bytes in DENY (vtnet0)
-    oidList.append('1.3.6.1.4.1.12325.1.200.1.8.2.1.9.10')        #Bytes out PASS (vtnet0)
-    oidList.append('1.3.6.1.4.1.12325.1.200.1.8.2.1.10.10')       #Bytes out DENY (vtnet0)
-    oidList.append('1.3.6.1.4.1.12325.1.200.1.8.2.1.11.10')       #PPS in (vtnet0)
-    oidList.append('1.3.6.1.4.1.12325.1.200.1.8.2.1.13.10')       #PPS out (vtnet0)
+    oidList.append('1.3.6.1.4.1.12325.1.200.1.8.2.1.7.14')        #Bytes in PASS (vtnet0)
+    oidList.append('1.3.6.1.4.1.12325.1.200.1.8.2.1.8.14')        #Bytes in DENY (vtnet0)
+    oidList.append('1.3.6.1.4.1.12325.1.200.1.8.2.1.9.14')        #Bytes out PASS (vtnet0)
+    oidList.append('1.3.6.1.4.1.12325.1.200.1.8.2.1.10.14')       #Bytes out DENY (vtnet0)
+    oidList.append('1.3.6.1.4.1.12325.1.200.1.8.2.1.11.14')       #PPS in (vtnet0)
+    oidList.append('1.3.6.1.4.1.12325.1.200.1.8.2.1.13.14')       #PPS out (vtnet0)
 
     #FORCE AN UPDATE OF THE STALE SNMP COUNTERS
     myCmd = 'snmpget -c s3cur3d 10.1.5.1    1.3.6.1.4.1.12325.1.200.1.8.2.1.7.10   > /dev/null'
@@ -73,17 +73,17 @@ def _main():
         if kOid == '1.3.6.1.4.1.12325.1.200.1.3.2.0':
             myDict.update(    {"searchesAgainstState":    kValue} )
         #VTNET0 (WAN) COUNTERS
-        if kOid == '1.3.6.1.4.1.12325.1.200.1.8.2.1.7.10':
+        if kOid == '1.3.6.1.4.1.12325.1.200.1.8.2.1.7.14':
             myDict.update(    {"vtnet0BytesInPass":    kValue} )
-        if kOid == '1.3.6.1.4.1.12325.1.200.1.8.2.1.8.10':
+        if kOid == '1.3.6.1.4.1.12325.1.200.1.8.2.1.8.14':
             myDict.update(    {"vtnet0BytesInDeny":    kValue} )
-        if kOid == '1.3.6.1.4.1.12325.1.200.1.8.2.1.9.10':
+        if kOid == '1.3.6.1.4.1.12325.1.200.1.8.2.1.9.14':
             myDict.update(    {"vtnet0BytesOutPass":    kValue} )
-        if kOid == '1.3.6.1.4.1.12325.1.200.1.8.2.1.10.10':
+        if kOid == '1.3.6.1.4.1.12325.1.200.1.8.2.1.10.14':
             myDict.update(    {"vtnet0BytesOutDeny":    kValue} )
-        if kOid == '1.3.6.1.4.1.12325.1.200.1.8.2.1.11.10':
+        if kOid == '1.3.6.1.4.1.12325.1.200.1.8.2.1.11.14':
             myDict.update(    {"vtnet0ppsIn":    kValue} )
-        if kOid == '1.3.6.1.4.1.12325.1.200.1.8.2.1.13.10':
+        if kOid == '1.3.6.1.4.1.12325.1.200.1.8.2.1.13.14':
             myDict.update(    {"vtnet0ppsOut":    kValue} )
 
     myDict.update(    {"ScriptRunTime_GETPFSENSESTATS.py":  time.time() - scriptStartTime} )

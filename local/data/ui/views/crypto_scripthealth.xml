@@ -14,7 +14,7 @@
       <chart>
         <title>Canary Search (script runtimes)</title>
         <search>
-          <query>sourcetype=_json source=*.py | timechart avg(ScriptRunTime_CRYPTOVIZ.py) as CRYPTOVIZ.py, avg(ScriptRunTime_MARKEYLOOPVIZ.py) as MARKEYLOOPVIZ.py, avg(ScriptRunTime_ARBVIZ.py) as ARBVIZ.py, avg(ScriptRunTime_GETISPPERFORMANCE.py) as GETISPPERFORMANCE.py, avg(ScriptRunTime_GETWEATHER.py) as GETWEATHER.py</query>
+          <query>sourcetype=_json source=*.py | timechart avg(ScriptRunTime_CRYPTOVIZ.py) as CRYPTOVIZ.py, avg(ScriptRunTime_MARKEYLOOPVIZ.py) as MARKEYLOOPVIZ.py, avg(ScriptRunTime_ARBVIZ.py) as ARBVIZ.py, avg(ScriptRunTime_GETISPPERFORMANCE.py) as GETISPPERFORMANCE.py, avg(ScriptRunTime_GETWEATHER.py) as GETWEATHER.py, avg(ScriptRunTime_GETWEATHERPREDICTIONS.py) as GETWEATHERPREDICTIONS.py, avg(ScriptRunTime_GETWEATHERPREDICTIONS3HOURLY.py) as GETWEATHERPREDICTIONS3HOURLY.py</query>
           <earliest>$formToken_TimePicker.earliest$</earliest>
           <latest>$formToken_TimePicker.latest$</latest>
         </search>
@@ -41,6 +41,7 @@
         <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
         <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
         <option name="charting.legend.placement">right</option>
+        <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
   </row>
