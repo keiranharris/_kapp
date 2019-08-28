@@ -28,14 +28,10 @@ def _main():
 
     myDict 	        = {}
     myDict 	        = _collectDNSdata(myDict)
-#    myDict 	        = _collectPINGdata(myDict)                 ............pythonping only supports python v3 so diable until then
+    #myDict 	        = _collectPINGdata(myDict)                 ............pythonping only supports python v3 so diable until then
     myDict          = _collectCURLdata(myDict, CURL_EXECUTABLE)
-<<<<<<< HEAD
     #COMMENTED OUT AUG2019 AS IT WAS ALWAYS 'SERVER BUSY' AND TAKING AGES TO RETURN (>180secs)
     #myDict          = _collectIPERFdata(myDict, IPERF_EXECUTABLE)
-=======
-#    myDict          = _collectIPERFdata(myDict, IPERF_EXECUTABLE)
->>>>>>> 3a3a891295fceafe0c69609859405a582c915243
     myDict          = _collectSPEEDTESTdata(myDict, SPEEDTEST_EXECUTABLE)
     _spitJSONoutToSplunk(myDict)
     #_logToFile()
