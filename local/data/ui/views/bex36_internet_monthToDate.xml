@@ -1,28 +1,31 @@
 <form>
-  <label>[Bex36:: Internet (acc. data model)]</label>
+  <label>[Bex36:: Internet - Month To Date]</label>
   <fieldset submitButton="false">
-    <input type="time" token="K_TimePicker">
-      <label>TimePicker</label>
+    <input type="time" token="_K-time-picker">
+      <label></label>
       <default>
-        <earliest>-mon@mon+25d</earliest>
-        <latest></latest>
+        <earliest>@mon</earliest>
+        <latest>now</latest>
       </default>
     </input>
   </fieldset>
   <row>
     <panel>
+      <title>TOTAL TRAFFIC</title>
       <single>
-        <title>TOTAL TRAFFIC</title>
         <search>
-          <query>| tstats min("bex36snmp_ta.bytesIn") max("bex36snmp_ta.bytesIn") min("bex36snmp_ta.bytesOut") max("bex36snmp_ta.bytesOut") from datamodel=k_snmp_ta  where (nodename = bex36snmp_ta) groupby _time prestats=true
-| stats min("bex36snmp_ta.bytesIn") as bytesDownStart, max("bex36snmp_ta.bytesIn") as bytesDownEnd, min("bex36snmp_ta.bytesOut") as bytesUpStart, max("bex36snmp_ta.bytesOut") as bytesUpEnd
-| eval bytesDownDiff = bytesDownEnd - bytesDownStart
-| eval bytesUpDiff = bytesUpEnd - bytesUpStart
-| eval bytesTotal = bytesDownDiff + bytesUpDiff
-| eval bytesTotalGB = round( ((bytesTotal)/1024/1024/1024), 10)
-| table bytesTotalGB</query>
-          <earliest>$K_TimePicker.earliest$</earliest>
-          <latest>$K_TimePicker.latest$</latest>
+          <query>sourcetype=_json source="/Applications/Splunk/etc/apps/_kapp/bin/_KNETWORK/getPFSENSEstats.py" | stats 
+earliest(vtnet0BytesOutPass) as bytesUpStart 
+latest(vtnet0BytesOutPass) as bytesUpEnd 
+earliest(vtnet0BytesInPass) as bytesDownStart 
+latest(vtnet0BytesInPass) as bytesDownEnd 
+| eval bytesUpToDate = (bytesUpEnd - bytesUpStart)/1024/1024/1024 
+| eval bytesDownToDate = (bytesDownEnd - bytesDownStart)/1024/1024/1024 
+| eval bytesTotal = bytesUpToDate + bytesDownToDate 
+| eval bytesTotal = round(bytesTotal,1) 
+| table bytesTotal</query>
+          <earliest>$_K-time-picker.earliest$</earliest>
+          <latest>$_K-time-picker.latest$</latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="colorBy">value</option>
@@ -30,7 +33,7 @@
         <option name="drilldown">none</option>
         <option name="numberPrecision">0.0</option>
         <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
-        <option name="rangeValues">[50,100,150,200]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
         <option name="refresh.display">progressbar</option>
         <option name="showSparkline">1</option>
         <option name="showTrendIndicator">1</option>
@@ -39,7 +42,6 @@
         <option name="trellis.size">medium</option>
         <option name="trendColorInterpretation">standard</option>
         <option name="trendDisplayMode">absolute</option>
-        <option name="underLabel">250 GB Monthly Quota (midnight 25th rollover)</option>
         <option name="unit">GB</option>
         <option name="unitPosition">after</option>
         <option name="useColors">1</option>
@@ -47,16 +49,16 @@
       </single>
     </panel>
     <panel>
+      <title>Made up of: UPLOADS</title>
       <single>
-        <title>Made up of: DOWNLOADS</title>
         <search>
-          <query>| tstats min("bex36snmp_ta.bytesIn") max("bex36snmp_ta.bytesIn") from datamodel=k_snmp_ta  where (nodename = bex36snmp_ta) groupby _time prestats=true
-| stats min("bex36snmp_ta.bytesIn") as bytesStart, max("bex36snmp_ta.bytesIn") as bytesEnd
-| eval bytesDiff = bytesEnd - bytesStart
-| eval bytesDiffGB = round( ((bytesDiff)/1024/1024/1024), 1)
-| table bytesDiffGB</query>
-          <earliest>$K_TimePicker.earliest$</earliest>
-          <latest>$K_TimePicker.latest$</latest>
+          <query>sourcetype=_json source="/Applications/Splunk/etc/apps/_kapp/bin/_KNETWORK/getPFSENSEstats.py" | stats 
+earliest(vtnet0BytesOutPass) as bytesUpStart 
+latest(vtnet0BytesOutPass) as bytesUpEnd 
+| eval bytesUpToDate = round(((bytesUpEnd - bytesUpStart)/1024/1024/1024),1)
+| table bytesUpToDate</query>
+          <earliest>$_K-time-picker.earliest$</earliest>
+          <latest>$_K-time-picker.latest$</latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="colorBy">value</option>
@@ -64,7 +66,7 @@
         <option name="drilldown">none</option>
         <option name="numberPrecision">0.0</option>
         <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
-        <option name="rangeValues">[50,100,150,200]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
         <option name="refresh.display">progressbar</option>
         <option name="showSparkline">1</option>
         <option name="showTrendIndicator">1</option>
@@ -73,7 +75,6 @@
         <option name="trellis.size">medium</option>
         <option name="trendColorInterpretation">standard</option>
         <option name="trendDisplayMode">absolute</option>
-        <option name="underLabel">Traffic Received (midnight 25th rollover)</option>
         <option name="unit">GB</option>
         <option name="unitPosition">after</option>
         <option name="useColors">1</option>
@@ -81,24 +82,24 @@
       </single>
     </panel>
     <panel>
+      <title>Made up of: DOWNLOADS</title>
       <single>
-        <title>Made up of: UPLOADS</title>
         <search>
-          <query>| tstats min("bex36snmp_ta.bytesOut") max("bex36snmp_ta.bytesOut") from datamodel=k_snmp_ta  where (nodename = bex36snmp_ta) groupby _time prestats=true
-| stats min("bex36snmp_ta.bytesOut") as bytesStart, max("bex36snmp_ta.bytesOut") as bytesEnd
-| eval bytesDiff = bytesEnd - bytesStart
-| eval bytesDiffGB = round( ((bytesDiff)/1024/1024/1024), 10)
-| table bytesDiffGB</query>
-          <earliest>$K_TimePicker.earliest$</earliest>
-          <latest>$K_TimePicker.latest$</latest>
+          <query>sourcetype=_json source="/Applications/Splunk/etc/apps/_kapp/bin/_KNETWORK/getPFSENSEstats.py" | stats 
+earliest(vtnet0BytesInPass) as bytesDownStart 
+latest(vtnet0BytesInPass) as bytesDownEnd 
+| eval bytesDownToDate = round(((bytesDownEnd - bytesDownStart)/1024/1024/1024),1)
+| table bytesDownToDate</query>
+          <earliest>$_K-time-picker.earliest$</earliest>
+          <latest>$_K-time-picker.latest$</latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="colorBy">value</option>
         <option name="colorMode">block</option>
         <option name="drilldown">none</option>
-        <option name="numberPrecision">0.0000</option>
+        <option name="numberPrecision">0.0</option>
         <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
-        <option name="rangeValues">[5,10,15,20]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
         <option name="refresh.display">progressbar</option>
         <option name="showSparkline">1</option>
         <option name="showTrendIndicator">1</option>
@@ -107,7 +108,6 @@
         <option name="trellis.size">medium</option>
         <option name="trendColorInterpretation">standard</option>
         <option name="trendDisplayMode">absolute</option>
-        <option name="underLabel">Traffic Transmitted (midnight 25th rollover)</option>
         <option name="unit">GB</option>
         <option name="unitPosition">after</option>
         <option name="useColors">1</option>
@@ -117,26 +117,30 @@
   </row>
   <row>
     <panel>
+      <title>GB Daily Breakdown</title>
       <chart>
-        <title>GB Daily Breakdown</title>
         <search>
-          <query>| tstats max("bex36snmp_ta.bytesIn") max("bex36snmp_ta.bytesOut") from datamodel=k_snmp_ta  where (nodename = bex36snmp_ta) groupby _time  prestats=true  
-| timechart span=1d max("bex36snmp_ta.bytesIn") as downBytesEoD, max("bex36snmp_ta.bytesOut") as upBytesEoD,  
-| streamstats window=2 global=f earliest(downBytesEoD) as downSoD, latest(downBytesEoD) as downEoD, earliest(upBytesEoD) as upSoD, latest(upBytesEoD) as upEoD   
-| eval downGB = (downEoD - downSoD)/1024/1024/1024 
-| eval upGB = (upEoD - upSoD)/1024/1024/1024 
-| eval date =strftime(_time, "%d.%m") 
-| table date, downGB, upGB</query>
-          <earliest>$K_TimePicker.earliest$</earliest>
-          <latest>$K_TimePicker.latest$</latest>
+          <query>sourcetype=_json source="/Applications/Splunk/etc/apps/_kapp/bin/_KNETWORK/getPFSENSEstats.py"
+| streamstats window=2 global=f 
+earliest(vtnet0BytesInPass) as bytesInStart, latest(vtnet0BytesInPass) as bytesInEnd, 
+earliest(vtnet0BytesOutPass) as bytesOutStart, latest(vtnet0BytesOutPass) as bytesOutEnd
+| eval bytesInPerSlice=(bytesInEnd-bytesInStart)/1024/1024/1024
+| eval bytesOutPerSlice=-(bytesOutEnd-bytesOutStart)/1024/1024/1024
+| timechart span=1d sum(bytesInPerSlice) as GB/day-DOWN sum(bytesOutPerSlice) as GB/day-UP</query>
+          <earliest>$_K-time-picker.earliest$</earliest>
+          <latest>$_K-time-picker.latest$</latest>
+          <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
         <option name="charting.axisTitleX.visibility">visible</option>
         <option name="charting.axisTitleY.visibility">visible</option>
         <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
         <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
         <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
         <option name="charting.axisY2.enabled">0</option>
         <option name="charting.axisY2.scale">inherit</option>
         <option name="charting.chart">column</option>
@@ -148,12 +152,17 @@
         <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
         <option name="charting.chart.stackMode">stacked</option>
         <option name="charting.chart.style">shiny</option>
-        <option name="charting.drilldown">all</option>
+        <option name="charting.drilldown">none</option>
         <option name="charting.layout.splitSeries">0</option>
         <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
         <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
         <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
         <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
       </chart>
     </panel>
   </row>

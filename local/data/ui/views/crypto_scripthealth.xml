@@ -1,5 +1,5 @@
 <form>
-  <label>[Crypto:: Script Health]</label>
+  <label>[IT:: Script Health]</label>
   <fieldset submitButton="false">
     <input type="time" token="formToken_TimePicker" searchWhenChanged="true">
       <label>Time Period</label>

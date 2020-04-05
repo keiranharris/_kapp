@@ -14,7 +14,7 @@ modtime = 1515271876.353357000
 
 [nav/default]
 version = 7.1.2
-modtime = 1563694155.917840000
+modtime = 1586050359.472503000
 
 [inputs/script%3A%2F%2F%2FApplications%2FSplunk%2Fetc%2Fapps%2F_kapp%2Fbin%2F_KNETWORK%2FgetISPperformance.py]
 owner = keiran.harris
@@ -114,7 +114,7 @@ access = read : [ * ], write : [ admin, can_delete, power ]
 export = none
 owner = keiran.harris
 version = 7.1.2
-modtime = 1566981744.027322000
+modtime = 1567050882.166500000
 
 [views/crypto_arbitrage]
 access = read : [ * ], write : [ admin, can_delete, power ]
@@ -151,11 +151,6 @@ owner = keiran.harris
 version = 7.1.2
 modtime = 1532767869.282897000
 
-[views/bex36_internet_dataModel]
-owner = keiran.harris
-version = 7.1.2
-modtime = 1566982331.033922000
-
 [inputs/script%3A%2F%2F%2FApplications%2FSplunk%2Fetc%2Fapps%2F_kapp%2Fbin%2F_KWEATHER%2FgetWeatherPredictions.py]
 owner = keiran.harris
 version = 7.1.2
@@ -176,7 +171,7 @@ modtime = 1547721862.641243000
 [views/bex36_internet_micro]
 owner = keiran
 version = 7.1.2
-modtime = 1566982249.016523000
+modtime = 1586050469.311002000
 
 [inputs/snmp%3A%2F%2Fstinka]
 owner = keiran
@@ -193,4 +188,36 @@ access = read : [ * ], write : [ * ]
 export = system
 owner = keiran
 version = 7.1.2
-modtime = 1564297646.466030000
+modtime = 1567049014.496620000
+
+[views/bex36_internet_monthToDate]
+export = system
+owner = keiran
+version = 7.1.2
+modtime = 1567049666.347210000
+
+[views/bex36_internet__cisco887]
+owner = keiran
+version = 7.1.2
+modtime = 1567049639.627758000
+
+[db_inputs/hass_temperature]
+access = read : [ admin, db_connect_admin, db_connect_user ], write : [ admin, db_connect_admin ]
+export = system
+owner = keiran
+version = 7.1.2
+modtime = 1578204102.430632000
+
+[savedsearches/Bex36%20Qotom%20Reboot]
+access = read : [ * ], write : [ admin, can_delete, power ]
+export = none
+owner = keiran
+version = 7.1.2
+modtime = 1586041420.309883000
+
+[views/bex36_linux]
+access = read : [ * ], write : [ * ]
+export = system
+owner = keiran
+version = 7.1.2
+modtime = 1586051364.350749000

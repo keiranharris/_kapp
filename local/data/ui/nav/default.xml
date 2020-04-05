@@ -20,11 +20,15 @@
     <view name="crypto_mining_gpudeepdive" />
   </collection>
   <collection label="BEX36[IT]">
+    <view name="bex36_internet_monthToDate" />
     <view name="bex36_pfsense" />
+    <view name="bex36_internet__cisco887" />
     <view name="bex36_internet_micro" />
-    <view name="bex36_internet" />
-    <view name="bex36_internet__fast" />
-    <view name="bex36_internet_dataModel" />
+    <view name="bex36_linux" />
+  </collection>
+  <collection label="BEX36[HASS]">
+    <view name="bex36_hass" />
+    <view name="bex36_haas_via_splunk" />
   </collection>
   <collection label="BEX36[WEATHER]">
     <view name="bex36_weather" />
